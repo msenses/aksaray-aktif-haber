@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { headers } from "next/headers";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -35,12 +36,15 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const h = headers();
+	const path = h.get("x-invoke-path") || h.get("next-url") || "";
+	const isAdmin = typeof path === "string" && path.startsWith("/admin");
 	return (
 		<html lang="tr">
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh flex flex-col`}>
-				<Header />
+				{!isAdmin && <Header />}
 				<main className="flex-1">{children}</main>
-				<Footer />
+				{!isAdmin && <Footer />}
 			</body>
 		</html>
 	);

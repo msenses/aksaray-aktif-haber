@@ -20,10 +20,9 @@ function NavLink({ href, label }: { href: string; label: string }) {
 }
 
 export default function AdminNav() {
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 	useEffect(() => {
-		// md ve üstü için varsayılan açık
-		const mq = window.matchMedia("(min-width: 768px)");
+		const mq = window.matchMedia("(min-width: 1024px)");
 		setOpen(mq.matches);
 		const handler = (e: MediaQueryListEvent) => setOpen(e.matches);
 		mq.addEventListener?.("change", handler);
@@ -31,9 +30,9 @@ export default function AdminNav() {
 	}, []);
 
 	return (
-		<div className={`transition-all duration-200 ${open ? "w-56" : "w-0 md:w-16"} overflow-hidden border-r border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5`}> 
+		<div className={`transition-all duration-200 ${open ? "w-56" : "w-0 lg:w-56"} overflow-hidden border-r border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5`}> 
 			<div className="p-3">
-				<button onClick={() => setOpen(!open)} className="mb-3 w-full md:w-auto text-xs px-2 py-1 rounded border border-black/10 dark:border-white/10">
+				<button onClick={() => setOpen(!open)} className="mb-3 w-full lg:hidden text-xs px-2 py-1 rounded border border-black/10 dark:border-white/10">
 					{open ? "Menüyü Gizle" : "Menü"}
 				</button>
 				<nav className="space-y-1">
