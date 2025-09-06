@@ -6,7 +6,7 @@ export default function Footer() {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
 				<div>
 					<h3 className="text-sm font-semibold mb-3">AKSARAY AKTİF HABER</h3>
-					<p className="text-sm/6 text-black/60 dark:text-white/60">Aksaray'dan en güncel ve güvenilir haberler.</p>
+					<p className="text-sm/6 text-black/60 dark:text-white/60">Aksaray&#39;dan en güncel ve güvenilir haberler.</p>
 				</div>
 				<nav className="space-y-2 text-sm">
 					<h4 className="font-medium">Site</h4>

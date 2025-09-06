@@ -18,9 +18,10 @@ export default function SupabaseStatus() {
 				}
 				setStatus("ok");
 				setMessage(data.session ? "Oturum var" : "Bağlantı başarılı (oturum yok)");
-			} catch (e: any) {
+			} catch (e: unknown) {
 				setStatus("error");
-				setMessage(e?.message || "Bilinmeyen hata");
+				const err = e as { message?: string };
+				setMessage(err?.message || "Bilinmeyen hata");
 			}
 		}
 		test();

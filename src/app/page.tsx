@@ -21,7 +21,7 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 			<section className="hero-gradient text-white">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">AKSARAY AKTİF HABER</h1>
-					<p className="mt-2 text-white/90">Aksaray'dan anlık, doğru ve tarafsız haberler.</p>
+					<p className="mt-2 text-white/90">Aksaray&#39;dan anlık, doğru ve tarafsız haberler.</p>
 					<div className="mt-3"><SupabaseStatus /></div>
 				</div>
 			</section>
