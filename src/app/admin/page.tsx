@@ -30,9 +30,11 @@ async function insertNews(formData: FormData): Promise<void> {
 	revalidatePath("/admin");
 }
 
-async function setStatus(id: string, status: "draft" | "published"): Promise<void> {
+async function updateStatusAction(formData: FormData): Promise<void> {
 	"use server";
 	const supabase = await createSupabaseServerClient();
+	const id = String(formData.get("id") || "");
+	const status = (String(formData.get("status") || "draft") as "draft" | "published");
 	const { error } = await supabase
 		.from("news")
 		.update({ status, published_at: status === "published" ? new Date().toISOString() : null })
@@ -41,9 +43,10 @@ async function setStatus(id: string, status: "draft" | "published"): Promise<voi
 	revalidatePath("/admin");
 }
 
-async function deleteNews(id: string): Promise<void> {
+async function deleteNewsAction(formData: FormData): Promise<void> {
 	"use server";
 	const supabase = await createSupabaseServerClient();
+	const id = String(formData.get("id") || "");
 	const { error } = await supabase.from("news").delete().eq("id", id);
 	if (error) throw new Error(error.message);
 	revalidatePath("/admin");
@@ -114,10 +117,13 @@ export default async function AdminPage() {
 										<p className="text-xs text-black/60 dark:text-white/60">Durum: {n.status} {n.published_at ? `— ${new Date(n.published_at).toLocaleDateString('tr-TR')}` : ''}</p>
 									</div>
 									<div className="flex items-center gap-2">
-										<form action={async () => setStatus(n.id, n.status === 'published' ? 'draft' : 'published')}>
+										<form action={updateStatusAction}>
+											<input type="hidden" name="id" value={n.id} />
+											<input type="hidden" name="status" value={n.status === 'published' ? 'draft' : 'published'} />
 											<button className="px-2 py-1 rounded border border-black/10 dark:border-white/10">{n.status === 'published' ? 'Taslağa Al' : 'Yayınla'}</button>
 										</form>
-										<form action={async () => deleteNews(n.id)}>
+										<form action={deleteNewsAction}>
+											<input type="hidden" name="id" value={n.id} />
 											<button className="px-2 py-1 rounded border border-red-300 text-red-700">Sil</button>
 										</form>
 									</div>
