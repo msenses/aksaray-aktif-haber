@@ -10,7 +10,6 @@ export default function ResetConfirmPage() {
 	const [ok, setOk] = useState(false);
 
 	useEffect(() => {
-		// Supabase, reset linkinden gelince recover session’ı kurar
 		async function checkSession() {
 			const { data } = await supabase.auth.getSession();
 			setOk(!!data.session);

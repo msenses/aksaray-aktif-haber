@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import AdminNav from "@/components/AdminNav";
 import "../globals.css";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
 	title: "Admin | AKSARAY AKTİF HABER",
@@ -21,7 +22,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 					</div>
 				</header>
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex">
-					<AdminNav />
+					<Suspense fallback={<div className="w-56 h-10" />}> 
+						<AdminNav />
+					</Suspense>
 					<main className="flex-1 py-6">{children}</main>
 				</div>
 			</body>
