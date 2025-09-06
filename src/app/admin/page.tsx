@@ -112,7 +112,7 @@ export default async function AdminPage({ searchParams }: { searchParams?: { vie
 							<h2 className="font-semibold mb-3">Hızlı İşlemler</h2>
 							<div className="flex flex-wrap gap-2">
 								<a className="px-3 py-2 rounded bg-blue-600 text-white" href="/admin?view=compose">Yeni Haber Ekle</a>
-								<a className="px-3 py-2 rounded border border-black/10 dark:border-white/10" href="/kategoriler" target="_blank">Kategorileri Gör</a>
+								<a className="px-3 py-2 rounded border border-black/10 dark:border-white/10" href="/admin/categories">Kategorileri Yönet</a>
 							</div>
 						</section>
 					</div>
