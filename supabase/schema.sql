@@ -62,7 +62,18 @@ create table if not exists public.media (
 	created_at timestamptz not null default now()
 );
 
+-- Comments
+create table if not exists public.comments (
+	id uuid primary key default gen_random_uuid(),
+	news_id uuid not null references public.news(id) on delete cascade,
+	author_name text,
+	content text not null,
+	is_approved boolean not null default true,
+	created_at timestamptz not null default now()
+);
+
 -- Indexes
 create index if not exists idx_news_published_at on public.news (published_at desc);
 create index if not exists idx_news_status on public.news (status);
 create index if not exists idx_news_category on public.news (category_id);
+create index if not exists idx_comments_news on public.comments (news_id, created_at);
