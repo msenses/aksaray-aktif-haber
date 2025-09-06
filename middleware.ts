@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -9,13 +9,17 @@ export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 	if (!pathname.startsWith("/admin")) return NextResponse.next();
 
-	const cookies = parseCookieHeader(request.headers.get("cookie") ?? "");
 	const response = NextResponse.next();
 	const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
-			getAll: () => cookies,
-			setAll: (setCookies) => {
-				setCookies.forEach((c) => response.headers.append("Set-Cookie", serializeCookieHeader(c)));
+			get(name: string) {
+				return request.cookies.get(name)?.value;
+			},
+			set(name: string, value: string, options: CookieOptions) {
+				response.cookies.set({ name, value, ...options });
+			},
+			remove(name: string, options: CookieOptions) {
+				response.cookies.set({ name, value: "", ...options, maxAge: 0 });
 			},
 		},
 	});
