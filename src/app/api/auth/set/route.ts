@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -11,14 +12,24 @@ export async function POST(request: Request) {
 	if (!access_token || !refresh_token) {
 		return NextResponse.json({ ok: false }, { status: 400 });
 	}
-	const incomingCookies = parseCookieHeader(request.headers.get("cookie") ?? "");
-	const response = NextResponse.json({ ok: true });
+
+	const res = NextResponse.json({ ok: true });
+	const cookieStore = cookies();
+
 	const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
-			getAll: () => incomingCookies,
-			setAll: (cookies) => cookies.forEach((c) => response.headers.append("Set-Cookie", serializeCookieHeader(c))),
+			get(name: string) {
+				return cookieStore.get(name)?.value;
+			},
+			set(name: string, value: string, options: CookieOptions) {
+				res.cookies.set({ name, value, ...options });
+			},
+			remove(name: string, options: CookieOptions) {
+				res.cookies.set({ name, value: "", ...options, maxAge: 0 });
+			},
 		},
 	});
+
 	await supabase.auth.setSession({ access_token, refresh_token });
-	return response;
+	return res;
 }
