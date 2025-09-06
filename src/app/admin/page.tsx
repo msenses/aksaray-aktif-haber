@@ -16,7 +16,7 @@ type LatestItem = {
 
 async function insertNews(formData: FormData): Promise<void> {
 	"use server";
-	const supabase = createSupabaseServerClient();
+	const supabase = await createSupabaseServerClient();
 	const title = String(formData.get("title") || "");
 	const summary = String(formData.get("summary") || "");
 	const content = String(formData.get("content") || "");
@@ -32,7 +32,7 @@ async function insertNews(formData: FormData): Promise<void> {
 
 async function setStatus(id: string, status: "draft" | "published"): Promise<void> {
 	"use server";
-	const supabase = createSupabaseServerClient();
+	const supabase = await createSupabaseServerClient();
 	const { error } = await supabase
 		.from("news")
 		.update({ status, published_at: status === "published" ? new Date().toISOString() : null })
@@ -43,14 +43,14 @@ async function setStatus(id: string, status: "draft" | "published"): Promise<voi
 
 async function deleteNews(id: string): Promise<void> {
 	"use server";
-	const supabase = createSupabaseServerClient();
+	const supabase = await createSupabaseServerClient();
 	const { error } = await supabase.from("news").delete().eq("id", id);
 	if (error) throw new Error(error.message);
 	revalidatePath("/admin");
 }
 
 async function fetchLatestNews() {
-	const supabase = createSupabaseServerClient();
+	const supabase = await createSupabaseServerClient();
 	const { data, error } = await supabase
 		.from("news")
 		.select("id,title,slug,status,created_at,published_at")
@@ -61,7 +61,7 @@ async function fetchLatestNews() {
 }
 
 export default async function AdminPage() {
-	const supabase = createSupabaseServerClient();
+	const supabase = await createSupabaseServerClient();
 	const { data: sess } = await supabase.auth.getSession();
 	const session = sess.session;
 	const categories = await fetchCategories();
@@ -74,7 +74,7 @@ export default async function AdminPage() {
 			{!session && (
 				<div className="rounded border border-black/10 dark:border-white/10 p-4">
 					<p className="mb-3">Yönetim işlemleri için giriş yapın.</p>
-					<a className="px-3 py-2 rounded bg-blue-600 text-white" href="/login">Giriş Sayfası</a>
+					<a className="px-3 py-2 rounded bg-blue-600 text-white" href="/admin/login">Giriş Sayfası</a>
 				</div>
 			)}
 
