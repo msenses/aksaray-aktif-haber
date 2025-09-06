@@ -1,18 +1,14 @@
-import { supabase } from "@/lib/supabaseClient";
 import { slugify } from "@/lib/slugify";
 import { fetchCategories } from "@/lib/categories";
 import { revalidatePath } from "next/cache";
 import { uploadPublicFile } from "@/lib/storage";
+import { createSupabaseServerClient } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
 
-async function getSession() {
-	const { data } = await supabase.auth.getSession();
-	return data.session;
-}
-
 async function insertNews(formData: FormData): Promise<void> {
 	"use server";
+	const supabase = createSupabaseServerClient();
 	const title = String(formData.get("title") || "");
 	const summary = String(formData.get("summary") || "");
 	const content = String(formData.get("content") || "");
@@ -22,14 +18,13 @@ async function insertNews(formData: FormData): Promise<void> {
 	const slug = slugify(title);
 
 	const { error } = await supabase.from("news").insert({ title, slug, summary, content, category_id: categoryId || null, status, cover_image_url: coverImageUrl || null, published_at: status === "published" ? new Date().toISOString() : null });
-	if (error) {
-		throw new Error(error.message);
-	}
+	if (error) throw new Error(error.message);
 	revalidatePath("/admin");
 }
 
 async function setStatus(id: string, status: "draft" | "published"): Promise<void> {
 	"use server";
+	const supabase = createSupabaseServerClient();
 	const { error } = await supabase
 		.from("news")
 		.update({ status, published_at: status === "published" ? new Date().toISOString() : null })
@@ -40,12 +35,14 @@ async function setStatus(id: string, status: "draft" | "published"): Promise<voi
 
 async function deleteNews(id: string): Promise<void> {
 	"use server";
+	const supabase = createSupabaseServerClient();
 	const { error } = await supabase.from("news").delete().eq("id", id);
 	if (error) throw new Error(error.message);
 	revalidatePath("/admin");
 }
 
 async function fetchLatestNews() {
+	const supabase = createSupabaseServerClient();
 	const { data, error } = await supabase
 		.from("news")
 		.select("id,title,slug,status,created_at,published_at")
@@ -56,7 +53,9 @@ async function fetchLatestNews() {
 }
 
 export default async function AdminPage() {
-	const session = await getSession();
+	const supabase = createSupabaseServerClient();
+	const { data: sess } = await supabase.auth.getSession();
+	const session = sess.session;
 	const categories = await fetchCategories();
 	const latest = session ? await fetchLatestNews() : [];
 

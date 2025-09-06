@@ -13,7 +13,7 @@ export default function AuthButton() {
 		setLoading(true);
 		setMessage(null);
 		const origin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000");
-		const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${origin}/admin` } });
+		const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${origin}/auth/callback` } });
 		setLoading(false);
 		if (error) setMessage(error.message);
 		else setMessage("E-postana giriş bağlantısı gönderdik.");
