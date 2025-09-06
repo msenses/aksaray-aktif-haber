@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-export const metadata = { title: "Yeni Şifre | AKSARAY AKTİF HABER" };
-
 export default function ResetConfirmPage() {
 	const [password, setPassword] = useState("");
 	const [password2, setPassword2] = useState("");

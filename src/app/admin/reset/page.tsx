@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-export const metadata = { title: "Şifre Sıfırlama | AKSARAY AKTİF HABER" };
-
 export default function ResetPage() {
 	const [email, setEmail] = useState("");
 	const [loading, setLoading] = useState(false);
