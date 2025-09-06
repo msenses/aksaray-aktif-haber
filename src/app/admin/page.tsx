@@ -102,6 +102,7 @@ export default async function AdminPage({ searchParams }: { searchParams?: { vie
 										</div>
 										<div className="flex items-center gap-2">
 											<a className="px-2 py-1 rounded border border-black/10 dark:border-white/10" href={`/haber/${n.slug}`} target="_blank">Görüntüle</a>
+											<a className="px-2 py-1 rounded border border-black/10 dark:border-white/10" href={`/admin/news/${n.id}`}>Düzenle</a>
 										</div>
 									</li>
 								))}
