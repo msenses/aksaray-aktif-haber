@@ -51,19 +51,18 @@ export default function AuthForm() {
 	}
 
 	return (
-		<div className="space-y-3">
+		<div className="space-y-4">
+			<div className="inline-flex rounded-lg border border-black/10 dark:border-white/10 overflow-hidden">
+				<button type="button" onClick={() => setMode("signin")} className={`px-3 py-2 text-sm ${mode === "signin" ? "bg-blue-600 text-white" : "bg-transparent"}`}>Giriş yap</button>
+				<button type="button" onClick={() => setMode("signup")} className={`px-3 py-2 text-sm ${mode === "signup" ? "bg-blue-600 text-white" : "bg-transparent"}`}>Kayıt ol</button>
+			</div>
+
 			<form onSubmit={onSubmit} className="space-y-2">
 				<input type="email" required placeholder="E-posta" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" />
 				<input type="password" required placeholder="Şifre" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" />
 				<button disabled={loading} className="w-full px-3 py-2 rounded bg-blue-600 text-white disabled:opacity-50">{mode === "signin" ? "Giriş yap" : "Kayıt ol"}</button>
 			</form>
-			<div className="text-sm text-black/70 dark:text-white/70">
-				{mode === "signin" ? (
-					<button className="underline underline-offset-4" onClick={() => setMode("signup")}>Hesabın yok mu? Kayıt ol</button>
-				) : (
-					<button className="underline underline-offset-4" onClick={() => setMode("signin")}>Hesabın var mı? Giriş yap</button>
-				)}
-			</div>
+
 			{message && <p className="text-sm text-black/70 dark:text-white/70">{message}</p>}
 		</div>
 	);
