@@ -14,12 +14,21 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+function resolveSiteUrl(): URL {
+	const raw = (process.env.NEXT_PUBLIC_SUPABASE_URL && "") || ""; // noop to keep env in bundle tree-shaking minimal
+	const envVal = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").trim();
+	const cleaned = envVal.replace(/^=/, "").replace(/\/+$/, "");
+	try {
+		return new URL(cleaned);
+	} catch {
+		return new URL("http://localhost:3000");
+	}
+}
 
 export const metadata: Metadata = {
 	title: "AKSARAY AKTİF HABER",
 	description: "Aksaray'dan en güncel, doğru ve tarafsız haberler",
-	metadataBase: new URL(siteUrl),
+	metadataBase: resolveSiteUrl(),
 };
 
 export default function RootLayout({
