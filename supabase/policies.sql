@@ -17,7 +17,7 @@ drop policy if exists "Public can read categories" on public.categories;
 create policy "Public can read categories" on public.categories
 for select using (true);
 
--- Public read authors limited fields (for simplicity allow all for now)
+-- Public read authors
 drop policy if exists "Public can read authors" on public.authors;
 create policy "Public can read authors" on public.authors
 for select using (true);
@@ -48,3 +48,13 @@ for select using (is_approved = true);
 drop policy if exists "Public can insert comments" on public.comments;
 create policy "Public can insert comments" on public.comments
 for insert with check (true);
+
+-- Authors insert for authenticated
+drop policy if exists "Authenticated can insert authors" on public.authors;
+create policy "Authenticated can insert authors" on public.authors
+for insert to authenticated with check (true);
+
+-- Media insert for authenticated
+drop policy if exists "Authenticated can insert media" on public.media;
+create policy "Authenticated can insert media" on public.media
+for insert to authenticated with check (true);

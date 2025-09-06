@@ -2,6 +2,7 @@ import { fetchNewsBySlug } from "@/lib/news";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { createSupabaseServerClient } from "@/lib/supabaseServer";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const data = await fetchNewsBySlug(params.slug);
@@ -26,6 +27,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function NewsDetail({ params }: { params: { slug: string } }) {
 	const data = await fetchNewsBySlug(params.slug);
 	if (!data) return notFound();
+	const supabase = await createSupabaseServerClient();
+	const { data: media } = await supabase
+		.from("media")
+		.select("id,url,media_type")
+		.eq("news_id", data.id)
+		.order("created_at", { ascending: true });
 
 	return (
 		<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
@@ -39,6 +46,16 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 			<article className="prose prose-blue dark:prose-invert max-w-none">
 				{data.content}
 			</article>
+
+			{media && media.length > 0 && (
+				<div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3">
+					{media.map((m: any) => (
+						<div key={m.id} className="relative w-full aspect-[4/3]">
+							<Image src={m.url} alt={data.title} fill className="object-cover rounded" />
+						</div>
+					))}
+				</div>
+			)}
 
 			<div className="mt-8 flex items-center gap-3 text-sm">
 				<span>Paylaş:</span>
