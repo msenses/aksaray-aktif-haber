@@ -17,6 +17,19 @@ drop policy if exists "Public can read categories" on public.categories;
 create policy "Public can read categories" on public.categories
 for select using (true);
 
+-- Authenticated manage categories
+drop policy if exists "Authenticated can insert categories" on public.categories;
+create policy "Authenticated can insert categories" on public.categories
+for insert to authenticated with check (true);
+
+drop policy if exists "Authenticated can update categories" on public.categories;
+create policy "Authenticated can update categories" on public.categories
+for update to authenticated using (true) with check (true);
+
+drop policy if exists "Authenticated can delete categories" on public.categories;
+create policy "Authenticated can delete categories" on public.categories
+for delete to authenticated using (true);
+
 -- Public read authors
 drop policy if exists "Public can read authors" on public.authors;
 create policy "Public can read authors" on public.authors
