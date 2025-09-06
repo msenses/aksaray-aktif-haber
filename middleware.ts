@@ -7,7 +7,9 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
-	if (!pathname.startsWith("/admin")) return NextResponse.next();
+	if (!pathname.startsWith("/admin") || pathname.startsWith("/admin/login") || pathname.startsWith("/admin/reset")) {
+		return NextResponse.next();
+	}
 
 	const response = NextResponse.next();
 	const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -27,7 +29,7 @@ export async function middleware(request: NextRequest) {
 	const { data } = await supabase.auth.getSession();
 	if (!data.session) {
 		const url = request.nextUrl.clone();
-		url.pathname = "/login";
+		url.pathname = "/admin/login";
 		return NextResponse.redirect(url);
 	}
 	return response;
