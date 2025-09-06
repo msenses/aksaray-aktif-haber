@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
+import CommentForm from "@/components/CommentForm";
 
 type MediaItem = { id: string; url: string; media_type: string | null };
+
+type CommentItem = { id: string; author_name: string | null; content: string; created_at: string };
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const data = await fetchNewsBySlug(params.slug);
@@ -36,6 +39,13 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 		.eq("news_id", data.id)
 		.order("created_at", { ascending: true });
 	const mediaItems: MediaItem[] = (media || []) as MediaItem[];
+	const { data: comments } = await supabase
+		.from("comments")
+		.select("id,author_name,content,created_at")
+		.eq("news_id", data.id)
+		.eq("is_approved", true)
+		.order("created_at", { ascending: false });
+	const commentItems: CommentItem[] = (comments || []) as CommentItem[];
 
 	return (
 		<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
@@ -59,6 +69,23 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 					))}
 				</div>
 			)}
+
+			<section className="mt-10 space-y-4">
+				<h2 className="text-lg font-semibold">Yorumlar</h2>
+				{commentItems.length === 0 && <p className="text-sm text-black/60 dark:text-white/60">Henüz yorum yok.</p>}
+				<ul className="space-y-3">
+					{commentItems.map((c) => (
+						<li key={c.id} className="rounded border border-black/10 dark:border-white/10 p-3 bg-white/70 dark:bg-white/5">
+							<p className="text-sm font-medium">{c.author_name || "Ziyaretçi"}</p>
+							<p className="text-sm text-black/80 dark:text-white/80">{c.content}</p>
+							<p className="text-[11px] text-black/60 dark:text-white/60 mt-1">{new Date(c.created_at).toLocaleString("tr-TR")}</p>
+						</li>
+					))}
+				</ul>
+				<div className="mt-4">
+					<CommentForm newsId={data.id} />
+				</div>
+			</section>
 
 			<div className="mt-8 flex items-center gap-3 text-sm">
 				<span>Paylaş:</span>
