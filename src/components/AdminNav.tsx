@@ -39,7 +39,7 @@ export default function AdminNav() {
 					<NavLink href="/admin" label="Dashboard" />
 					<NavLink href="/admin?view=compose" label="Yeni Haber" />
 					<NavLink href="/admin/categories" label="Kategoriler" />
-					<NavLink href="/admin?view=comments" label="Yorumlar" />
+					<NavLink href="/admin/comments" label="Yorumlar" />
 				</nav>
 			</div>
 		</div>
