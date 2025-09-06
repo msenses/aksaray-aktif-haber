@@ -46,20 +46,27 @@ export default async function AdminPage() {
 				<div className="grid gap-8 md:grid-cols-2">
 					<section className="rounded border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 						<h2 className="font-semibold mb-3">Yeni Haber Ekle</h2>
-						<form action={insertNewsAction} className="space-y-3">
+						<form action={insertNewsAction} className="space-y-3" encType="multipart/form-data">
 							<input name="title" placeholder="Başlık" className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" required />
-							<textarea name="summary" placeholder="Özet" className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" />
-							<textarea name="content" placeholder="İçerik" className="w-full h-32 rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" required />
+							<textarea name="summary" placeholder="Özet" className="w-full h-24 rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" />
+							<textarea name="content" placeholder="Detaylı İçerik" className="w-full h-48 rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" required />
 							<select name="categoryId" className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5">
 								<option value="">Kategori seç (opsiyonel)</option>
 								{categories.map((c) => (
 									<option key={c.id} value={c.id}>{c.name}</option>
 								))}
 							</select>
+
 							<div className="space-y-2">
-								<label className="text-sm">Kapak görseli (URL):</label>
-								<input name="coverImageUrl" placeholder="https://..." className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" />
+								<label className="text-sm font-medium">Kapak Fotoğrafı</label>
+								<input type="file" name="cover" accept="image/*" className="block w-full text-sm" />
 							</div>
+
+							<div className="space-y-2">
+								<label className="text-sm font-medium">Galeri Fotoğrafları</label>
+								<input type="file" name="gallery" accept="image/*" multiple className="block w-full text-sm" />
+							</div>
+
 							<select name="status" className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5">
 								<option value="draft">Taslak</option>
 								<option value="published">Yayınla</option>
