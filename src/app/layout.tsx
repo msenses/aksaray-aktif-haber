@@ -31,12 +31,12 @@ export const metadata: Metadata = {
 	metadataBase: resolveSiteUrl(),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const h = headers();
+	const h = await headers();
 	const path = h.get("x-invoke-path") || h.get("next-url") || "";
 	const isAdmin = typeof path === "string" && path.startsWith("/admin");
 	return (
