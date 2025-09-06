@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
 
+type MediaItem = { id: string; url: string; media_type: string | null };
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const data = await fetchNewsBySlug(params.slug);
 	if (!data) return { title: "Haber bulunamadı" };
@@ -33,6 +35,7 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 		.select("id,url,media_type")
 		.eq("news_id", data.id)
 		.order("created_at", { ascending: true });
+	const mediaItems: MediaItem[] = (media || []) as MediaItem[];
 
 	return (
 		<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
@@ -47,9 +50,9 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 				{data.content}
 			</article>
 
-			{media && media.length > 0 && (
+			{mediaItems.length > 0 && (
 				<div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3">
-					{media.map((m: any) => (
+					{mediaItems.map((m) => (
 						<div key={m.id} className="relative w-full aspect-[4/3]">
 							<Image src={m.url} alt={data.title} fill className="object-cover rounded" />
 						</div>

@@ -15,7 +15,6 @@ const geistMono = Geist_Mono({
 });
 
 function resolveSiteUrl(): URL {
-	const raw = (process.env.NEXT_PUBLIC_SUPABASE_URL && "") || ""; // noop to keep env in bundle tree-shaking minimal
 	const envVal = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").trim();
 	const cleaned = envVal.replace(/^=/, "").replace(/\/+$/, "");
 	try {
