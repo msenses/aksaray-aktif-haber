@@ -13,11 +13,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 		<html lang="tr">
 			<body className="admin-body min-h-dvh antialiased">
 				<header className="admin-header sticky top-0 z-40 border-b border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur">
-					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-						<div className="flex items-center gap-2">
-							<Image src="/aktif_logo.png" alt="Logo" width={28} height={28} />
-							<span className="font-semibold">AKSARAY AKTİF HABER</span>
-							<span className="ml-2 text-xs px-2 py-0.5 rounded bg-blue-600 text-white">Admin</span>
+					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-[120px] flex items-center justify-center">
+						<div className="flex items-center gap-4">
+							<Image src="/aktif_logo.png" alt="Logo" width={84} height={84} />
+							<div className="flex flex-col">
+								<span className="font-semibold text-xl sm:text-2xl">AKSARAY AKTİF HABER</span>
+								<span className="mt-1 text-xs sm:text-sm px-2 py-0.5 rounded bg-blue-600 text-white self-start">Admin Paneli</span>
+							</div>
 						</div>
 					</div>
 				</header>
