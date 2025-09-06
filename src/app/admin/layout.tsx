@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="tr">
-			<body className="min-h-dvh antialiased">
-				<header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur">
+			<body className="admin-body min-h-dvh antialiased">
+				<header className="admin-header sticky top-0 z-40 border-b border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur">
 					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
 						<div className="flex items-center gap-2">
 							<Image src="/aktif_logo.png" alt="Logo" width={28} height={28} />
