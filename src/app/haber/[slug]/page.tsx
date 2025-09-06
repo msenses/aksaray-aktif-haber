@@ -1,6 +1,7 @@
 import { fetchNewsBySlug } from "@/lib/news";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const data = await fetchNewsBySlug(params.slug);
@@ -31,7 +32,9 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 			<h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">{data.title}</h1>
 			<p className="text-black/70 dark:text-white/70 mb-6">{data.summary}</p>
 			{data.cover_image_url && (
-				<img src={data.cover_image_url} alt={data.title} className="w-full rounded-lg mb-6" />
+				<div className="relative w-full h-72 mb-6">
+					<Image src={data.cover_image_url} alt={data.title} fill className="object-cover rounded-lg" />
+				</div>
 			)}
 			<article className="prose prose-blue dark:prose-invert max-w-none">
 				{data.content}

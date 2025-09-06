@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabaseClient";
 import { slugify } from "@/lib/slugify";
 import { fetchCategories } from "@/lib/categories";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +10,7 @@ async function getSession() {
 	return data.session;
 }
 
-async function insertNews(formData: FormData) {
+async function insertNews(formData: FormData): Promise<void> {
 	"use server";
 	const title = String(formData.get("title") || "");
 	const summary = String(formData.get("summary") || "");
@@ -20,9 +21,9 @@ async function insertNews(formData: FormData) {
 
 	const { error } = await supabase.from("news").insert({ title, slug, summary, content, category_id: categoryId || null, status, published_at: status === "published" ? new Date().toISOString() : null });
 	if (error) {
-		return { ok: false, message: error.message };
+		throw new Error(error.message);
 	}
-	return { ok: true };
+	revalidatePath("/admin");
 }
 
 export default async function AdminPage() {
