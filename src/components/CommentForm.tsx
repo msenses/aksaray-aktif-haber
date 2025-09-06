@@ -13,7 +13,7 @@ export default function CommentForm({ newsId }: { newsId: string }) {
 		e.preventDefault();
 		setLoading(true);
 		setMsg(null);
-		const { error } = await supabase.from("comments").insert({ news_id: newsId, author_name: author || null, content });
+		const { error } = await supabase.from("comments").insert({ news_id: newsId, author_name: author || null, content, is_approved: false });
 		setLoading(false);
 		if (error) setMsg(error.message);
 		else {
