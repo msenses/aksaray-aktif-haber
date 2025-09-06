@@ -1,7 +1,6 @@
-import { slugify } from "@/lib/slugify";
 import { fetchCategories } from "@/lib/categories";
-import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
+import { insertNewsAction, updateStatusAction, deleteNewsAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -13,44 +12,6 @@ type LatestItem = {
 	created_at: string;
 	published_at: string | null;
 };
-
-async function insertNews(formData: FormData): Promise<void> {
-	"use server";
-	const supabase = await createSupabaseServerClient();
-	const title = String(formData.get("title") || "");
-	const summary = String(formData.get("summary") || "");
-	const content = String(formData.get("content") || "");
-	const categoryId = String(formData.get("categoryId") || "");
-	const status = String(formData.get("status") || "draft");
-	const coverImageUrl = String(formData.get("coverImageUrl") || "");
-	const slug = slugify(title);
-
-	const { error } = await supabase.from("news").insert({ title, slug, summary, content, category_id: categoryId || null, status, cover_image_url: coverImageUrl || null, published_at: status === "published" ? new Date().toISOString() : null });
-	if (error) throw new Error(error.message);
-	revalidatePath("/admin");
-}
-
-async function updateStatusAction(formData: FormData): Promise<void> {
-	"use server";
-	const supabase = await createSupabaseServerClient();
-	const id = String(formData.get("id") || "");
-	const status = (String(formData.get("status") || "draft") as "draft" | "published");
-	const { error } = await supabase
-		.from("news")
-		.update({ status, published_at: status === "published" ? new Date().toISOString() : null })
-		.eq("id", id);
-	if (error) throw new Error(error.message);
-	revalidatePath("/admin");
-}
-
-async function deleteNewsAction(formData: FormData): Promise<void> {
-	"use server";
-	const supabase = await createSupabaseServerClient();
-	const id = String(formData.get("id") || "");
-	const { error } = await supabase.from("news").delete().eq("id", id);
-	if (error) throw new Error(error.message);
-	revalidatePath("/admin");
-}
 
 async function fetchLatestNews() {
 	const supabase = await createSupabaseServerClient();
@@ -85,7 +46,7 @@ export default async function AdminPage() {
 				<div className="grid gap-8 md:grid-cols-2">
 					<section className="rounded border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 						<h2 className="font-semibold mb-3">Yeni Haber Ekle</h2>
-						<form action={insertNews} className="space-y-3">
+						<form action={insertNewsAction} className="space-y-3">
 							<input name="title" placeholder="Başlık" className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" required />
 							<textarea name="summary" placeholder="Özet" className="w-full rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" />
 							<textarea name="content" placeholder="İçerik" className="w-full h-32 rounded border border-black/10 dark:border-white/10 px-3 py-2 bg-white/70 dark:bg-white/5" required />
