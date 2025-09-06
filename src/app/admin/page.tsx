@@ -1,10 +1,18 @@
 import { slugify } from "@/lib/slugify";
 import { fetchCategories } from "@/lib/categories";
 import { revalidatePath } from "next/cache";
-import { uploadPublicFile } from "@/lib/storage";
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
+
+type LatestItem = {
+	id: string;
+	title: string;
+	slug: string;
+	status: "draft" | "published";
+	created_at: string;
+	published_at: string | null;
+};
 
 async function insertNews(formData: FormData): Promise<void> {
 	"use server";
@@ -49,7 +57,7 @@ async function fetchLatestNews() {
 		.order("created_at", { ascending: false })
 		.limit(20);
 	if (error) throw new Error(error.message);
-	return data || [];
+	return (data || []) as LatestItem[];
 }
 
 export default async function AdminPage() {
@@ -99,7 +107,7 @@ export default async function AdminPage() {
 					<section className="rounded border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 						<h2 className="font-semibold mb-3">Son Haberler</h2>
 						<ul className="divide-y divide-black/10 dark:divide-white/10">
-							{latest.map((n: any) => (
+							{latest.map((n) => (
 								<li key={n.id} className="py-3 flex items-center justify-between gap-3">
 									<div className="min-w-0">
 										<p className="font-medium truncate">{n.title}</p>
