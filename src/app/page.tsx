@@ -1,5 +1,4 @@
 import NewsCard from "@/components/NewsCard";
-import SupabaseStatus from "@/components/SupabaseStatus";
 import { fetchPublishedNewsPage } from "@/lib/news";
 
 export default async function Home({ searchParams }: { searchParams?: { page?: string } }) {
@@ -18,15 +17,12 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 
 	return (
 		<div className="font-sans">
-			<section className="hero-gradient text-white">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">AKSARAY AKTİF HABER</h1>
-					<p className="mt-2 text-white/90">Aksaray&#39;dan anlık, doğru ve tarafsız haberler.</p>
-					<div className="mt-3"><SupabaseStatus /></div>
-				</div>
+			{/* Banner alanı */}
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+				<div className="relative w-full h-32 sm:h-40 md:h-52 lg:h-60 rounded overflow-hidden bg-[url('/aktif_logo.png')] bg-cover bg-center"></div>
 			</section>
 
-			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-8">
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-0">
 				{items.length === 0 ? (
 					<p className="text-sm text-black/70 dark:text-white/70 py-10">Şu anda yayınlanmış haber bulunamadı.</p>
 				) : (
