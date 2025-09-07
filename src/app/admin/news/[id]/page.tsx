@@ -1,6 +1,7 @@
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
 import { fetchCategories } from "@/lib/categories";
 import { revalidatePath } from "next/cache";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -187,7 +188,9 @@ export default async function EditNewsPage({ params }: { params: { id: string } 
 				<ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
 					{media.map((m) => (
 						<li key={m.id} className="space-y-2">
-							<img src={m.url} alt="media" className="w-full aspect-[4/3] object-cover rounded" />
+							<div className="relative w-full aspect-[4/3] overflow-hidden rounded">
+								<Image src={m.url} alt="media" fill sizes="(max-width: 768px) 50vw, 33vw" className="object-cover" />
+							</div>
 							<div className="flex items-center gap-2">
 								<form action={deleteMedia}>
 									<input type="hidden" name="id" value={n.id} />

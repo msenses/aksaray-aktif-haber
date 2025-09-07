@@ -9,7 +9,7 @@ export default function Header() {
 					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={120} priority />
 					<div className="flex flex-col leading-tight">
 						<span className="text-lg font-semibold tracking-tight uppercase whitespace-nowrap">AKSARAY AKTİF HABER</span>
-						<span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap">Tarafsızlığın Adresi, Aksaray'ın Sesi</span>
+						<span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap">Tarafsızlığın Adresi, Aksaray&apos;ın Sesi</span>
 					</div>
 				</Link>
 
