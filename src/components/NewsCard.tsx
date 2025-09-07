@@ -11,8 +11,9 @@ export type NewsCardProps = {
 
 export default function NewsCard({ title, excerpt, date, viewCount, imageSrc, slug }: NewsCardProps) {
 	if (slug) {
+		const href = `/haber/${encodeURIComponent(slug)}`;
 		return (
-			<a href={`/haber/${slug}`} className="group block rounded-2xl overflow-hidden border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur transition-shadow hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+			<a href={href} className="group block rounded-2xl overflow-hidden border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur transition-shadow hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
 				<article>
 					<div className="relative h-48 w-full">
 						<Image
