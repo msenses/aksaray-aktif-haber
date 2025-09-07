@@ -1,6 +1,7 @@
 import NewsCard from "@/components/NewsCard";
 import LatestNewsSlider from "@/components/LatestNewsSlider";
 import { fetchPublishedNewsPage, fetchLatestPublishedNews } from "@/lib/news";
+import { Fragment } from "react";
 
 export default async function Home({ searchParams }: { searchParams?: { page?: string } }) {
 	const page = Number(searchParams?.page || "1");
@@ -37,16 +38,22 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 					<p className="text-sm text-black/70 dark:text-white/70 py-10">Şu anda yayınlanmış haber bulunamadı.</p>
 				) : (
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-						{items.map((n) => (
-							<NewsCard
-								key={n.id}
-								title={n.title}
-								excerpt={n.summary || ""}
-								category={"Yayın"}
-								date={n.published_at || new Date().toISOString()}
-								slug={n.slug}
-								imageSrc={n.cover_image_url || undefined}
-							/>
+						{items.map((n, idx) => (
+							<Fragment key={n.id}>
+								<NewsCard
+									title={n.title}
+									excerpt={n.summary || ""}
+									category={"Yayın"}
+									date={n.published_at || new Date().toISOString()}
+									slug={n.slug}
+									imageSrc={n.cover_image_url || undefined}
+								/>
+								{(idx + 1) % 3 === 0 && (
+									<div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center min-h-48 h-48 text-sm text-black/60 dark:text-white/60">
+										Reklam Alanı
+									</div>
+								)}
+							</Fragment>
 						))}
 					</div>
 				)}
