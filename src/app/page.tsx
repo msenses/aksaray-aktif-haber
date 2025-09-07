@@ -43,10 +43,10 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 								<NewsCard
 									title={n.title}
 									excerpt={n.summary || ""}
-									category={"Yayın"}
 									date={n.published_at || new Date().toISOString()}
 									slug={n.slug}
 									imageSrc={n.cover_image_url || undefined}
+									viewCount={0}
 								/>
 								{(idx + 1) % 3 === 0 && (
 									<div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center min-h-48 h-48 text-sm text-black/60 dark:text-white/60">
