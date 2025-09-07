@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
+import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
@@ -31,6 +32,9 @@ async function deleteComment(formData: FormData) {
 }
 
 export default async function CommentsAdminPage() {
+	const h = await headers();
+	const url = h.get("next-url") || "";
+	const showPending = /[?&]tab=pending/.test(url || "");
 	const { pending, approved } = await fetchData();
 	return (
 		<div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 space-y-8">
@@ -38,8 +42,9 @@ export default async function CommentsAdminPage() {
 			<section className="rounded border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 				<h2 className="font-semibold mb-3">Onay Bekleyen</h2>
 				<ul className="divide-y divide-black/10 dark:divide-white/10">
-					{pending.length === 0 && <li className="py-3 text-sm text-black/60 dark:text-white/60">Bekleyen yorum yok.</li>}
-					{pending.map((c) => (
+					{!showPending && <li className="py-3 text-sm text-black/60 dark:text-white/60">Sadece bekleyenleri görmek için adres çubuğuna <code>?tab=pending</code> ekleyin.</li>}
+					{showPending && pending.length === 0 && <li className="py-3 text-sm text-black/60 dark:text-white/60">Bekleyen yorum yok.</li>}
+					{showPending && pending.map((c) => (
 						<li key={c.id} className="py-3 flex items-start justify-between gap-3">
 							<div className="min-w-0">
 								<p className="text-sm font-medium">{c.author_name || "Ziyaretçi"}</p>

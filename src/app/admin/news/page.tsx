@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
+import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -13,20 +14,25 @@ type Row = {
   views: number | null;
 };
 
-async function fetchAllNews(): Promise<Row[]> {
+async function fetchAllNews(status?: "draft" | "published"): Promise<Row[]> {
   const supabase = await createSupabaseServerClient();
-  const { data } = await supabase
+  let query = supabase
     .from("news")
     .select("id,title,slug,status,category_id,published_at,created_at,views")
     .order("created_at", { ascending: false });
+  if (status) query = query.eq("status", status);
+  const { data } = await query;
   return (data || []) as Row[];
 }
 
 export default async function AdminNewsListPage() {
-  const items = await fetchAllNews();
+  const h = await headers();
+  const url = h.get("next-url") || "";
+  const statusParam = /[?&]status=(draft|published)/.exec(url || "")?.[1] as "draft" | "published" | undefined;
+  const items = await fetchAllNews(statusParam);
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-2xl font-bold mb-6">Haberler</h1>
+      <h1 className="text-2xl font-bold mb-6">Haberler {statusParam ? `— ${statusParam === "published" ? "Yayınlananlar" : "Taslaklar"}` : ""}</h1>
 
       {items.length === 0 ? (
         <p className="text-sm text-black/60 dark:text-white/60">Henüz haber eklenmemiş.</p>

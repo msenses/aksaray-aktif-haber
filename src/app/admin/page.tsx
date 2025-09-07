@@ -71,22 +71,22 @@ export default async function AdminPage({ searchParams }: { searchParams?: { vie
 					)}
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-						<div className="rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						<a href="/admin/news" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Toplam Haber</p>
 							<p className="text-2xl font-semibold">{stats.total}</p>
-						</div>
-						<div className="rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						</a>
+						<a href="/admin/news?status=published" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Yayında</p>
 							<p className="text-2xl font-semibold">{stats.published}</p>
-						</div>
-						<div className="rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						</a>
+						<a href="/admin/news?status=draft" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Taslak</p>
 							<p className="text-2xl font-semibold">{stats.draft}</p>
-						</div>
-						<div className="rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						</a>
+						<a href="/admin/comments?tab=pending" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Bekleyen Yorum</p>
 							<p className="text-2xl font-semibold">{stats.pendingComments}</p>
-						</div>
+						</a>
 					</div>
 
 					<div className="grid gap-8 md:grid-cols-2">
