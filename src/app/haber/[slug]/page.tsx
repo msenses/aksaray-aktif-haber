@@ -33,6 +33,9 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 	const data = await fetchNewsBySlug(params.slug);
 	if (!data) return notFound();
 	const supabase = await createSupabaseServerClient();
+	try {
+		await supabase.rpc("increment_news_views", { p_news_id: data.id });
+	} catch {}
 	const { data: media } = await supabase
 		.from("media")
 		.select("id,url,media_type")

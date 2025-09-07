@@ -8,6 +8,7 @@ export type PublishedNews = {
 	summary: string | null;
 	cover_image_url: string | null;
 	published_at: string | null;
+	views?: number | null;
 };
 
 export async function fetchPublishedNewsPage(page: number, pageSize: number) {
@@ -18,7 +19,7 @@ export async function fetchPublishedNewsPage(page: number, pageSize: number) {
 
 	const { data, count, error } = await supabase
 		.from("news")
-		.select("id,slug,title,summary,cover_image_url,published_at", { count: "exact" })
+		.select("id,slug,title,summary,cover_image_url,published_at,views", { count: "exact" })
 		.eq("status", "published")
 		.order("published_at", { ascending: false, nullsFirst: false })
 		.range(from, to);
@@ -44,12 +45,13 @@ export type FullNews = {
 	cover_image_url: string | null;
 	published_at: string | null;
 	created_at: string;
+	views?: number | null;
 };
 
 export async function fetchNewsBySlug(slug: string) {
 	const { data, error } = await supabase
 		.from("news")
-		.select("id,slug,title,summary,content,cover_image_url,published_at,created_at")
+		.select("id,slug,title,summary,content,cover_image_url,published_at,created_at,views")
 		.eq("slug", slug)
 		.limit(1)
 		.single();
@@ -71,7 +73,7 @@ export async function fetchPublishedNewsByCategorySlug(slug: string, page: numbe
 
 	const { data, count, error } = await supabase
 		.from("news")
-		.select("id,slug,title,summary,cover_image_url,published_at", { count: "exact" })
+		.select("id,slug,title,summary,cover_image_url,published_at,views", { count: "exact" })
 		.eq("status", "published")
 		.eq("category_id", category.id)
 		.order("published_at", { ascending: false, nullsFirst: false })
@@ -91,7 +93,7 @@ export async function searchPublishedNews(query: string, page: number, pageSize:
 
 	const { data, count, error } = await supabase
 		.from("news")
-		.select("id,slug,title,summary,cover_image_url,published_at", { count: "exact" })
+		.select("id,slug,title,summary,cover_image_url,published_at,views", { count: "exact" })
 		.eq("status", "published")
 		.or(`title.ilike.%${q}%,summary.ilike.%${q}%`)
 		.order("published_at", { ascending: false, nullsFirst: false })
@@ -105,7 +107,7 @@ export async function fetchLatestPublishedNews(limit: number) {
 	const take = Number.isFinite(limit) && limit > 0 ? limit : 10;
 	const { data, error } = await supabase
 		.from("news")
-		.select("id,slug,title,summary,cover_image_url,published_at")
+		.select("id,slug,title,summary,cover_image_url,published_at,views")
 		.eq("status", "published")
 		.order("published_at", { ascending: false, nullsFirst: false })
 		.limit(take);

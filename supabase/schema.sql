@@ -37,7 +37,8 @@ create table if not exists public.news (
 	status public.news_status not null default 'draft',
 	published_at timestamptz,
 	created_at timestamptz not null default now(),
-	updated_at timestamptz not null default now()
+	updated_at timestamptz not null default now(),
+	views integer not null default 0
 );
 
 -- Auto update updated_at
@@ -52,6 +53,25 @@ $$ language plpgsql;
 create trigger trg_news_updated_at
 before update on public.news
 for each row execute function public.set_updated_at();
+
+-- For existing deployments, ensure the views column exists
+alter table public.news add column if not exists views integer not null default 0;
+
+-- Increment views RPC (security definer to bypass RLS safely)
+create or replace function public.increment_news_views(p_news_id uuid)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  update public.news
+  set views = coalesce(views, 0) + 1
+  where id = p_news_id and status = 'published';
+end;
+$$;
+
+grant execute on function public.increment_news_views(uuid) to anon, authenticated;
 
 -- Media (attachments for news)
 create table if not exists public.media (
