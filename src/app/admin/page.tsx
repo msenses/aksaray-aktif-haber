@@ -52,7 +52,7 @@ export default async function AdminPage({ searchParams }: { searchParams?: { vie
 	const okMsg = searchParams?.ok ? "Kayıt başarıyla eklendi." : "";
 
 	return (
-		<div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+		<div className="mx-auto max-w-6xl w-full px-4 sm:px-6 lg:px-8 py-10 space-y-8 overflow-x-hidden">
 			<h1 className="text-2xl font-bold">Yönetim Paneli</h1>
 
 			{!session && (
@@ -70,7 +70,7 @@ export default async function AdminPage({ searchParams }: { searchParams?: { vie
 						</div>
 					)}
 
-					<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 						<div className="rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Toplam Haber</p>
 							<p className="text-2xl font-semibold">{stats.total}</p>
@@ -95,12 +95,12 @@ export default async function AdminPage({ searchParams }: { searchParams?: { vie
 							<ul className="divide-y divide-black/10 dark:divide-white/10">
 								{latest.length === 0 && <li className="py-3 text-sm text-black/60 dark:text-white/60">Henüz haber yok.</li>}
 								{latest.map((n) => (
-									<li key={n.id} className="py-3 flex items-center justify-between gap-3">
+									<li key={n.id} className="py-3 flex flex-wrap items-center gap-3">
 										<div className="min-w-0">
 											<p className="font-medium truncate">{n.title}</p>
 											<p className="text-xs text-black/60 dark:text-white/60">Durum: {n.status} {n.published_at ? `— ${new Date(n.published_at).toLocaleDateString('tr-TR')}` : ''}</p>
 										</div>
-										<div className="flex items-center gap-2">
+										<div className="flex items-center gap-2 shrink-0 flex-wrap">
 											<a className="px-2 py-1 rounded border border-black/10 dark:border-white/10" href={`/haber/${n.slug}`} target="_blank">Görüntüle</a>
 											<a className="px-2 py-1 rounded border border-black/10 dark:border-white/10" href={`/admin/news/${n.id}`}>Düzenle</a>
 										</div>
