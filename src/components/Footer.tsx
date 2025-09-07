@@ -25,12 +25,12 @@ export default function Footer() {
 								<path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.407.593 24 1.325 24h11.495v-9.294H9.692V11.09h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.314h3.587l-.467 3.616h-3.12V24h6.116C23.407 24 24 23.407 24 22.674V1.326C24 .593 23.407 0 22.675 0z"/>
 							</svg>
 						</a>
-						<a href={(process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" aria-label="X" title="X" className="p-2 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 hover:bg-white transition">
+						<a href={(process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/aksarayaktifha1")} target="_blank" rel="noopener noreferrer" aria-label="X" title="X" className="p-2 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 hover:bg-white transition">
 							<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" className="w-5 h-5 text-black dark:text-white" fill="currentColor">
 								<path d="M3 2h4l6.5 8.7L20 2h4l-8.5 10.5L24 24h-4l-7-9.4L6 24H2l9-11.1L3 2zm13.445 18h1.91L8.63 4h-1.89l9.705 16z"/>
 							</svg>
 						</a>
-						<a href={(process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" className="p-2 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 hover:bg-white transition">
+						<a href={(process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/aksaray.aktif.haber")} target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" className="p-2 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 hover:bg-white transition">
 							<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<defs>
 									<linearGradient id="igGradientFooter" x1="0" y1="0" x2="1" y2="1">
