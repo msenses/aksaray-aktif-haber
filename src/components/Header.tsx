@@ -19,8 +19,26 @@ export default function Header() {
 			else if (y < lastY) setHidden(false);
 			lastY = y;
 		};
+
+		// Menü açıksa body scroll kilitle
+		const checkbox = document.getElementById("mobile-drawer") as HTMLInputElement | null;
+		const onChange = () => {
+			if (checkbox?.checked) {
+				document.documentElement.style.overflow = "hidden";
+				document.body.style.overflow = "hidden";
+			} else {
+				document.documentElement.style.overflow = "";
+				document.body.style.overflow = "";
+			}
+		};
+		checkbox?.addEventListener("change", onChange);
 		window.addEventListener("scroll", onScroll, { passive: true });
-		return () => window.removeEventListener("scroll", onScroll);
+		return () => {
+			window.removeEventListener("scroll", onScroll);
+			checkbox?.removeEventListener("change", onChange);
+			document.documentElement.style.overflow = "";
+			document.body.style.overflow = "";
+		};
 	}, []);
 	return (
 		<header className={`sticky top-0 z-50 bg-white border-b border-black/5 transform transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
@@ -57,8 +75,8 @@ export default function Header() {
 
 			{/* Drawer */}
 			<div className="fixed inset-0 z-[1000] md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0 [&>label]:opacity-0 peer-checked:[&>label]:opacity-100">
-				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/70 transition-opacity"></label>
-				<aside className="absolute left-0 top-0 h-full w-72 bg-white border-r border-black/10 -translate-x-full transition-transform relative z-[1001] shadow-xl">
+				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/70 transition-opacity pointer-events-auto"></label>
+				<aside className="absolute left-0 top-0 h-dvh w-72 bg-white border-r border-black/10 -translate-x-full transition-transform relative z-[1001] shadow-xl pointer-events-auto">
 					<div className="h-[120px] flex items-center gap-3 px-4 border-b border-black/10 bg-white">
 						<Image src="/aktif_logo_yeni.png" alt="Logo" width={84} height={84} />
 					</div>
