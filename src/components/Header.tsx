@@ -53,7 +53,7 @@ export default function Header() {
 				</label>
 
 				<Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0 flex items-center gap-3 min-w-0">
-					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={200} priority className="block h-32 w-auto md:h-[200px]" />
+					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={200} priority className="block h-32 w-auto md:h-[120px]" />
 					<div className="hidden md:flex flex-col leading-tight">
 						<span className="text-lg font-semibold tracking-tight uppercase whitespace-nowrap">AKSARAY AKTİF HABER</span>
 						<span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap">Tarafsızlığın Adresi, Aksaray&apos;ın Sesi</span>
