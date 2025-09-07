@@ -30,12 +30,12 @@ export default function AdminNav() {
 	}, []);
 
 	return (
-		<div className={`transition-all duration-200 ${open ? "w-56" : "w-0 lg:w-56"} overflow-hidden border-r border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5`}> 
+		<div className={`transition-all duration-200 ${open ? "w-56" : "w-12 lg:w-56"} overflow-hidden border-r border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5`}> 
 			<div className="p-3">
-				<button onClick={() => setOpen(!open)} className="mb-3 w-full lg:hidden text-xs px-2 py-1 rounded border border-black/10 dark:border-white/10">
-					{open ? "Menüyü Gizle" : "Menü"}
+				<button onClick={() => setOpen(!open)} className="mb-3 w-full text-xs px-2 py-1 rounded border border-black/10 dark:border-white/10 lg:hidden">
+					{open ? "Gizle" : "Menü"}
 				</button>
-				<nav className="space-y-1">
+				<nav className={`${open ? "block" : "hidden"} lg:block space-y-1`}>
 					<NavLink href="/admin" label="Dashboard" />
 					<NavLink href="/admin?view=compose" label="Yeni Haber" />
 					<NavLink href="/admin/news" label="Haberler" />
