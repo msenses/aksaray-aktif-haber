@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 export type NewsCardProps = {
 	title: string;
@@ -13,7 +12,7 @@ export type NewsCardProps = {
 export default function NewsCard({ title, excerpt, date, viewCount, imageSrc, slug }: NewsCardProps) {
 	if (slug) {
 		return (
-			<Link href={`/haber/${slug}`} className="group block rounded-2xl overflow-hidden border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur transition-shadow hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+			<a href={`/haber/${slug}`} className="group block rounded-2xl overflow-hidden border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur transition-shadow hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40">
 				<article>
 					<div className="relative h-48 w-full">
 						<Image
@@ -34,7 +33,7 @@ export default function NewsCard({ title, excerpt, date, viewCount, imageSrc, sl
 						<p className="text-sm/6 text-black/70 dark:text-white/70 line-clamp-3">{excerpt}</p>
 					</div>
 				</article>
-			</Link>
+			</a>
 		);
 	}
 	return (
