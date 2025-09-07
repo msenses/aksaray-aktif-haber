@@ -55,6 +55,9 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 		<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
 			<h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">{data.title}</h1>
 			<p className="text-black/70 dark:text-white/70 mb-6">{data.summary}</p>
+			<div className="relative w-full h-24 sm:h-28 md:h-32 lg:h-36 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center text-sm text-black/60 dark:text-white/60 mb-6">
+				Reklam Alanı
+			</div>
 			{data.cover_image_url && (
 				<div className="relative w-full h-72 mb-6">
 					<Image src={data.cover_image_url} alt={data.title} fill className="object-cover rounded-lg" />
@@ -68,6 +71,9 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 			<article className="prose prose-blue dark:prose-invert max-w-none">
 				{data.content}
 			</article>
+			<div className="mt-8 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center min-h-48 h-48 text-sm text-black/60 dark:text-white/60">
+				Reklam Alanı
+			</div>
 
 			{mediaItems.length > 0 && (
 				<div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3">
