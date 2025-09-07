@@ -44,6 +44,22 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  overflow-x: hidden;
+}
+
+/* Mobilde yatay taşmaları engelle ve uzun içerikleri kır */
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.container, .max-w-7xl, .max-w-6xl, .max-w-5xl, .max-w-3xl {
+  overflow-x: hidden;
 }
 
 /* Admin özel görünüm: public header iç öğeleri gizle */
