@@ -20,9 +20,26 @@ export default function Footer() {
 				<div className="text-sm">
 					<h4 className="font-medium mb-2">Sosyal</h4>
 					<div className="flex gap-4 flex-wrap">
-						<a href={(process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://facebook.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">Facebook</a>
-						<a href={(process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">X</a>
-						<a href={(process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">Instagram</a>
+						<a href={(process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://facebook.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4 flex items-center gap-2">
+							<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+								<path d="M22.675 0H1.325C.593 0 0 .593 0 1.326v21.348C0 23.407.593 24 1.325 24h11.495v-9.294H9.692V11.09h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.314h3.587l-.467 3.616h-3.12V24h6.116C23.407 24 24 23.407 24 22.674V1.326C24 .593 23.407 0 22.675 0z"/>
+							</svg>
+							<span>Facebook</span>
+						</a>
+						<a href={(process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4 flex items-center gap-2">
+							<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor">
+								<path d="M4 4L20 20M20 4L4 20" strokeWidth="2" strokeLinecap="round"/>
+							</svg>
+							<span>X</span>
+						</a>
+						<a href={(process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4 flex items-center gap-2">
+							<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor">
+								<rect x="3" y="3" width="18" height="18" rx="5" ry="5" strokeWidth="2"/>
+								<circle cx="12" cy="12" r="5" strokeWidth="2"/>
+								<circle cx="18" cy="6" r="1.5" fill="currentColor"/>
+							</svg>
+							<span>Instagram</span>
+						</a>
 					</div>
 				</div>
 				<div className="text-sm">
