@@ -58,11 +58,11 @@ export default function Header() {
 			{/* Drawer */}
 			<div className="fixed inset-0 z-[1000] md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0 [&>label]:opacity-0 peer-checked:[&>label]:opacity-100">
 				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/70 transition-opacity"></label>
-				<aside className="absolute left-0 top-0 h-full w-72 bg-white bg-opacity-100 border-r border-black/10 -translate-x-full transition-transform relative z-[1001] shadow-xl">
-					<div className="h-[120px] flex items-center gap-3 px-4 border-b border-black/10 dark:border-white/10">
+				<aside className="absolute left-0 top-0 h-full w-72 bg-white border-r border-black/10 -translate-x-full transition-transform relative z-[1001] shadow-xl">
+					<div className="h-[120px] flex items-center gap-3 px-4 border-b border-black/10 bg-white">
 						<Image src="/aktif_logo_yeni.png" alt="Logo" width={84} height={84} />
 					</div>
-					<nav className="p-4 flex flex-col gap-3 text-sm">
+					<nav className="p-4 flex flex-col gap-3 text-sm bg-white">
 						<Link href="/" onClick={closeDrawer} className="px-2 py-2 rounded bg-white hover:bg-gray-100">Anasayfa</Link>
 						<Link href="/kategoriler" onClick={closeDrawer} className="px-2 py-2 rounded bg-white hover:bg-gray-100">Kategoriler</Link>
 						<Link href="/hakkimizda" onClick={closeDrawer} className="px-2 py-2 rounded bg-white hover:bg-gray-100">Hakkımızda</Link>
