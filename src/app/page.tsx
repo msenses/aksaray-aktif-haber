@@ -1,10 +1,12 @@
 import NewsCard from "@/components/NewsCard";
-import { fetchPublishedNewsPage } from "@/lib/news";
+import LatestNewsSlider from "@/components/LatestNewsSlider";
+import { fetchPublishedNewsPage, fetchLatestPublishedNews } from "@/lib/news";
 
 export default async function Home({ searchParams }: { searchParams?: { page?: string } }) {
 	const page = Number(searchParams?.page || "1");
 	let total = 0;
 	let items: Awaited<ReturnType<typeof fetchPublishedNewsPage>>["items"] = [];
+  const latest = await fetchLatestPublishedNews(12);
 	try {
 		const res = await fetchPublishedNewsPage(page, 9);
 		total = res.total;
@@ -17,12 +19,20 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 
 	return (
 		<div className="font-sans">
-			{/* Banner alanı */}
+			{/* Reklam alanı (header altı geniş banner) */}
 			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
-				<div className="relative w-full h-32 sm:h-40 md:h-52 lg:h-60 rounded overflow-hidden bg-[url('/aktif_logo.png')] bg-cover bg-center"></div>
+				<div className="relative w-full h-24 sm:h-28 md:h-32 lg:h-36 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center text-sm text-black/60 dark:text-white/60">
+					Reklam Alanı
+				</div>
 			</section>
 
-			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-0">
+			{/* Son Haberler slider */}
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2">
+				<h2 className="text-lg font-semibold mb-3">Son Haberler</h2>
+				<LatestNewsSlider items={latest} />
+			</section>
+
+			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 				{items.length === 0 ? (
 					<p className="text-sm text-black/70 dark:text-white/70 py-10">Şu anda yayınlanmış haber bulunamadı.</p>
 				) : (

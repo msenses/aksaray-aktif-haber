@@ -100,3 +100,15 @@ export async function searchPublishedNews(query: string, page: number, pageSize:
 	if (error) throw new Error(error.message);
 	return { items: (data || []) as PublishedNews[], total: count || 0, page: currentPage, pageSize: limit };
 }
+
+export async function fetchLatestPublishedNews(limit: number) {
+	const take = Number.isFinite(limit) && limit > 0 ? limit : 10;
+	const { data, error } = await supabase
+		.from("news")
+		.select("id,slug,title,summary,cover_image_url,published_at")
+		.eq("status", "published")
+		.order("published_at", { ascending: false, nullsFirst: false })
+		.limit(take);
+	if (error) throw new Error(error.message);
+	return (data || []) as PublishedNews[];
+}
