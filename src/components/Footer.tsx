@@ -18,6 +18,14 @@ export default function Footer() {
 					</div>
 				</nav>
 				<div className="text-sm">
+					<h4 className="font-medium mb-2">Sosyal</h4>
+					<div className="flex gap-4 flex-wrap">
+						<a href={(process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://facebook.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">Facebook</a>
+						<a href={(process.env.NEXT_PUBLIC_TWITTER_URL || "https://twitter.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">X</a>
+						<a href={(process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/aksarayaktifhaber")} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">Instagram</a>
+					</div>
+				</div>
+				<div className="text-sm">
 					<h4 className="font-medium mb-2">Yasal</h4>
 					<div className="flex gap-4 flex-wrap">
 						<Link href="/gizlilik" className="hover:underline underline-offset-4">Gizlilik</Link>
