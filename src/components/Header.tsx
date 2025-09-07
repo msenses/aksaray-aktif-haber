@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 function closeDrawer() {
 	const el = document.getElementById("mobile-drawer") as HTMLInputElement | null;
@@ -8,8 +9,21 @@ function closeDrawer() {
 }
 
 export default function Header() {
+	const [hidden, setHidden] = useState(false);
+
+	useEffect(() => {
+		let lastY = window.scrollY;
+		const onScroll = () => {
+			const y = window.scrollY;
+			if (y > lastY && y > 50) setHidden(true);
+			else if (y < lastY) setHidden(false);
+			lastY = y;
+		};
+		window.addEventListener("scroll", onScroll, { passive: true });
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
 	return (
-		<header className="sticky top-0 z-50 bg-white border-b border-black/5">
+		<header className={`sticky top-0 z-50 bg-white border-b border-black/5 transform transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
 			<input id="mobile-drawer" type="checkbox" className="peer hidden" />
 
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-32 md:h-[120px] relative md:flex md:items-center md:justify-between gap-4">
@@ -21,7 +35,7 @@ export default function Header() {
 				</label>
 
 				<Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0 flex items-center gap-3 min-w-0">
-					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={120} priority className="block h-32 w-auto md:h-[120px]" />
+					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={200} priority className="block h-32 w-auto md:h-[120px]" />
 					<div className="hidden md:flex flex-col leading-tight">
 						<span className="text-lg font-semibold tracking-tight uppercase whitespace-nowrap">AKSARAY AKTİF HABER</span>
 						<span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap">Tarafsızlığın Adresi, Aksaray&apos;ın Sesi</span>
@@ -42,8 +56,8 @@ export default function Header() {
 			</div>
 
 			{/* Drawer */}
-			<div className="fixed inset-0 z-[1000] md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0">
-				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/70"></label>
+			<div className="fixed inset-0 z-[1000] md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0 [&>label]:opacity-0 peer-checked:[&>label]:opacity-100">
+				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/70 transition-opacity"></label>
 				<aside className="absolute left-0 top-0 h-full w-72 bg-white border-r border-black/10 -translate-x-full transition-transform relative z-[1001] shadow-xl">
 					<div className="h-[120px] flex items-center gap-3 px-4 border-b border-black/10 dark:border-white/10">
 						<Image src="/aktif_logo_yeni.png" alt="Logo" width={84} height={84} />
