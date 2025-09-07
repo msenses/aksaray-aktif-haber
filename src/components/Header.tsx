@@ -7,7 +7,10 @@ export default function Header() {
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-[120px] flex items-center justify-between gap-4">
 				<Link href="/" className="flex items-center gap-3 min-w-0">
 					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={120} priority />
-					<span className="text-lg font-semibold tracking-tight uppercase whitespace-nowrap">AKSARAY AKTİF HABER</span>
+					<div className="flex flex-col leading-tight">
+						<span className="text-lg font-semibold tracking-tight uppercase whitespace-nowrap">AKSARAY AKTİF HABER</span>
+						<span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap">Tarafsızlığın Adresi, Aksaray'ın Sesi</span>
+					</div>
 				</Link>
 
 				<form action="/arama" method="get" className="hidden md:flex items-center gap-2 flex-1 max-w-lg">

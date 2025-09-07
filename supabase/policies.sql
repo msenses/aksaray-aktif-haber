@@ -54,13 +54,28 @@ create policy "Authenticated can delete news" on public.news
 for delete to authenticated using (true);
 
 -- Comments policies
+-- Public can read only approved comments
 drop policy if exists "Public can read approved comments" on public.comments;
 create policy "Public can read approved comments" on public.comments
 for select using (is_approved = true);
 
+-- Public can insert comments (pending by default)
 drop policy if exists "Public can insert comments" on public.comments;
 create policy "Public can insert comments" on public.comments
 for insert with check (true);
+
+-- Authenticated moderation: select/update/delete any comment
+drop policy if exists "Authenticated can select comments" on public.comments;
+create policy "Authenticated can select comments" on public.comments
+for select to authenticated using (true);
+
+drop policy if exists "Authenticated can update comments" on public.comments;
+create policy "Authenticated can update comments" on public.comments
+for update to authenticated using (true) with check (true);
+
+drop policy if exists "Authenticated can delete comments" on public.comments;
+create policy "Authenticated can delete comments" on public.comments
+for delete to authenticated using (true);
 
 -- Authors insert for authenticated
 drop policy if exists "Authenticated can insert authors" on public.authors;
