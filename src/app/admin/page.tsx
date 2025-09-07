@@ -1,6 +1,7 @@
 import { fetchCategories } from "@/lib/categories";
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
 import { insertNewsAction, updateStatusAction, deleteNewsAction } from "./actions";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -71,22 +72,22 @@ export default async function AdminPage({ searchParams }: { searchParams?: { vie
 					)}
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-						<a href="/admin/news" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						<Link href="/admin/news" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Toplam Haber</p>
 							<p className="text-2xl font-semibold">{stats.total}</p>
-						</a>
-						<a href="/admin/news?status=published" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						</Link>
+						<Link href="/admin/news?status=published" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Yayında</p>
 							<p className="text-2xl font-semibold">{stats.published}</p>
-						</a>
-						<a href="/admin/news?status=draft" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						</Link>
+						<Link href="/admin/news?status=draft" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Taslak</p>
 							<p className="text-2xl font-semibold">{stats.draft}</p>
-						</a>
-						<a href="/admin/comments?tab=pending" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
+						</Link>
+						<Link href="/admin/comments?tab=pending" className="block rounded-lg border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 							<p className="text-xs text-black/60 dark:text-white/60">Bekleyen Yorum</p>
 							<p className="text-2xl font-semibold">{stats.pendingComments}</p>
-						</a>
+						</Link>
 					</div>
 
 					<div className="grid gap-8 md:grid-cols-2">
