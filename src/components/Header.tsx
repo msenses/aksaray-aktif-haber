@@ -36,12 +36,11 @@ export default function Header() {
 			</div>
 
 			{/* Drawer */}
-			<div className="fixed inset-0 z-50 md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0">
+			<div className="fixed inset-0 z-[1000] md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0">
 				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/30"></label>
-				<aside className="absolute left-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 border-r border-black/10 dark:border-white/10 -translate-x-full transition-transform">
+				<aside className="absolute left-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 border-r border-black/10 dark:border-white/10 -translate-x-full transition-transform relative z-[1001] shadow-xl">
 					<div className="h-[120px] flex items-center gap-3 px-4 border-b border-black/10 dark:border-white/10">
 						<Image src="/aktif_logo_yeni.png" alt="Logo" width={84} height={84} />
-						<span className="font-semibold">AKSARAY AKTİF HABER</span>
 					</div>
 					<nav className="p-4 flex flex-col gap-3 text-sm">
 						<Link href="/" className="px-2 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5">Anasayfa</Link>
