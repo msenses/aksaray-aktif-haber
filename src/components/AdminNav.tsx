@@ -26,7 +26,15 @@ export default function AdminNav() {
 		setOpen(mq.matches);
 		const handler = (e: MediaQueryListEvent) => setOpen(e.matches);
 		mq.addEventListener?.("change", handler);
-		return () => mq.removeEventListener?.("change", handler);
+		const openHandler = () => setOpen(true);
+		const toggleHandler = () => setOpen((v) => !v);
+		window.addEventListener("admin-nav:open", openHandler as EventListener);
+		window.addEventListener("admin-nav:toggle", toggleHandler as EventListener);
+		return () => {
+			mq.removeEventListener?.("change", handler);
+			window.removeEventListener("admin-nav:open", openHandler as EventListener);
+			window.removeEventListener("admin-nav:toggle", toggleHandler as EventListener);
+		};
 	}, []);
 
 	return (
@@ -43,15 +51,6 @@ export default function AdminNav() {
 					</nav>
 				</div>
 			</div>
-
-			{/* Mobil: sabit menü butonu */}
-			<button
-				onClick={() => setOpen(true)}
-				className="fixed left-3 top-[90px] z-[1100] lg:hidden text-xs px-3 py-2 rounded border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5"
-				aria-label="Menüyü Aç"
-			>
-				Menü
-			</button>
 
 			{/* Mobil: overlay çekmece */}
 			{open && (
