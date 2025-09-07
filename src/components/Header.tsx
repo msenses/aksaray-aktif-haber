@@ -6,16 +6,16 @@ export default function Header() {
 		<header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/30 border-b border-black/5 dark:border-white/10">
 			<input id="mobile-drawer" type="checkbox" className="peer hidden" />
 
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 md:h-[120px] flex items-center justify-between gap-4">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-48 md:h-[120px] relative md:flex md:items-center md:justify-between gap-4">
 				{/* Mobile menu button */}
-				<label htmlFor="mobile-drawer" className="md:hidden p-2 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 cursor-pointer">
+				<label htmlFor="mobile-drawer" className="md:hidden absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 cursor-pointer">
 					<span className="block w-6 h-0.5 bg-black dark:bg-white mb-1"></span>
 					<span className="block w-6 h-0.5 bg-black dark:bg-white mb-1"></span>
 					<span className="block w-6 h-0.5 bg-black dark:bg-white"></span>
 				</label>
 
-				<Link href="/" className="flex items-center gap-3 min-w-0">
-					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={120} priority className="h-16 w-auto md:h-[120px]" />
+				<Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0 flex items-center gap-3 min-w-0">
+					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={120} priority className="h-48 w-auto md:h-[120px]" />
 					<div className="hidden md:flex flex-col leading-tight">
 						<span className="text-lg font-semibold tracking-tight uppercase whitespace-nowrap">AKSARAY AKTİF HABER</span>
 						<span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap">Tarafsızlığın Adresi, Aksaray&apos;ın Sesi</span>
