@@ -38,6 +38,7 @@ export default function AdminNav() {
 				<nav className="space-y-1">
 					<NavLink href="/admin" label="Dashboard" />
 					<NavLink href="/admin?view=compose" label="Yeni Haber" />
+					<NavLink href="/admin/news" label="Haberler" />
 					<NavLink href="/admin/categories" label="Kategoriler" />
 					<NavLink href="/admin/comments" label="Yorumlar" />
 				</nav>
