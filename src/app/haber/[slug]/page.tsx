@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function NewsDetail({ params }: { params: { slug: string } }) {
 	const data = await fetchNewsBySlug(params.slug);
 	if (!data) return notFound();
+	const publishedAt = data.published_at || data.created_at;
 	const supabase = await createSupabaseServerClient();
 	try {
 		await supabase.rpc("increment_news_views", { p_news_id: data.id });
@@ -59,6 +60,11 @@ export default async function NewsDetail({ params }: { params: { slug: string } 
 					<Image src={data.cover_image_url} alt={data.title} fill className="object-cover rounded-lg" />
 				</div>
 			)}
+			<div className="flex items-center gap-3 text-xs text-black/60 dark:text-white/60 mb-4">
+				<time dateTime={publishedAt}>{new Date(publishedAt).toLocaleDateString("tr-TR")} {new Date(publishedAt).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</time>
+				<span>•</span>
+				<span>{typeof data.views === "number" ? data.views : 0} görüntülenme</span>
+			</div>
 			<article className="prose prose-blue dark:prose-invert max-w-none">
 				{data.content}
 			</article>
