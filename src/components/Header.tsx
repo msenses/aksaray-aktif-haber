@@ -9,7 +9,7 @@ function closeDrawer() {
 
 export default function Header() {
 	return (
-		<header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/30 border-b border-black/5 dark:border-white/10">
+		<header className="sticky top-0 z-50 bg-white border-b border-black/5">
 			<input id="mobile-drawer" type="checkbox" className="peer hidden" />
 
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-32 md:h-[120px] relative md:flex md:items-center md:justify-between gap-4">
@@ -44,7 +44,7 @@ export default function Header() {
 			{/* Drawer */}
 			<div className="fixed inset-0 z-[1000] md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0">
 				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/70"></label>
-				<aside className="absolute left-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 border-r border-black/10 dark:border-white/10 -translate-x-full transition-transform relative z-[1001] shadow-xl">
+				<aside className="absolute left-0 top-0 h-full w-72 bg-white border-r border-black/10 -translate-x-full transition-transform relative z-[1001] shadow-xl">
 					<div className="h-[120px] flex items-center gap-3 px-4 border-b border-black/10 dark:border-white/10">
 						<Image src="/aktif_logo_yeni.png" alt="Logo" width={84} height={84} />
 					</div>
