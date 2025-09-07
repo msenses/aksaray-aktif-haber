@@ -7,11 +7,16 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
-	if (!pathname.startsWith("/admin") || pathname.startsWith("/admin/login") || pathname.startsWith("/admin/reset")) {
+	const isAdminPath = pathname.startsWith("/admin");
+	const isAuthPath = pathname.startsWith("/admin/login") || pathname.startsWith("/admin/reset");
+	if (!isAdminPath || isAuthPath) {
 		return NextResponse.next();
 	}
 
-	const response = NextResponse.next();
+	// Mark admin routes so server components can detect reliably
+	const requestHeaders = new Headers(request.headers);
+	requestHeaders.set("x-admin-route", "1");
+	const response = NextResponse.next({ request: { headers: requestHeaders } });
 	const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
 			get(name: string) {

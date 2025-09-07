@@ -37,8 +37,9 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const h = await headers();
+	const isAdminHeader = h.get("x-admin-route") === "1";
 	const path = h.get("x-invoke-path") || h.get("next-url") || "";
-	const isAdmin = typeof path === "string" && path.startsWith("/admin");
+	const isAdmin = isAdminHeader || (typeof path === "string" && path.startsWith("/admin"));
 	return (
 		<html lang="tr">
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-dvh flex flex-col`}>
