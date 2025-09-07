@@ -25,7 +25,7 @@ export default function Footer() {
 					</div>
 				</div>
 				<div className="text-sm text-black/60 dark:text-white/60 sm:col-span-2 lg:col-span-1 sm:text-right lg:text-left">
-					<p>© {new Date().getFullYear()} AKSARAY AKTİF HABER. Tüm hakları saklıdır.</p>
+					<p>© 2019 AKSARAY AKTİF HABER. Tüm hakları saklıdır.</p>
 				</div>
 			</div>
 		</footer>
