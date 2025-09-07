@@ -8,7 +8,7 @@ export default function Header() {
 
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-32 md:h-[120px] relative md:flex md:items-center md:justify-between gap-4">
 				{/* Mobile menu button */}
-				<label htmlFor="mobile-drawer" className="md:hidden absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 cursor-pointer">
+				<label htmlFor="mobile-drawer" className="md:hidden absolute left-4 top-1/2 -translate-y-1/2 z-50 p-2 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 cursor-pointer">
 					<span className="block w-6 h-0.5 bg-black dark:bg-white mb-1"></span>
 					<span className="block w-6 h-0.5 bg-black dark:bg-white mb-1"></span>
 					<span className="block w-6 h-0.5 bg-black dark:bg-white"></span>
@@ -36,9 +36,9 @@ export default function Header() {
 			</div>
 
 			{/* Drawer */}
-			<div className="fixed inset-0 z-50 md:hidden pointer-events-none peer-checked:pointer-events-auto">
+			<div className="fixed inset-0 z-50 md:hidden pointer-events-none peer-checked:pointer-events-auto peer-checked:[&>aside]:translate-x-0">
 				<label htmlFor="mobile-drawer" className="absolute inset-0 bg-black/30"></label>
-				<aside className="absolute left-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 border-r border-black/10 dark:border-white/10 -translate-x-full peer-checked:translate-x-0 transition-transform">
+				<aside className="absolute left-0 top-0 h-full w-72 bg-white dark:bg-zinc-900 border-r border-black/10 dark:border-white/10 -translate-x-full transition-transform">
 					<div className="h-[120px] flex items-center gap-3 px-4 border-b border-black/10 dark:border-white/10">
 						<Image src="/aktif_logo_yeni.png" alt="Logo" width={84} height={84} />
 						<span className="font-semibold">AKSARAY AKTİF HABER</span>
