@@ -4,9 +4,10 @@ import Image from "next/image";
 export default function Header() {
 	return (
 		<header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/30 border-b border-black/5 dark:border-white/10">
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-[120px] flex items-center justify-between gap-4">
+			<input id="mobile-drawer" type="checkbox" className="peer hidden" />
+
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 md:h-[120px] flex items-center justify-between gap-4">
 				{/* Mobile menu button */}
-				<input id="mobile-drawer" type="checkbox" className="peer hidden" />
 				<label htmlFor="mobile-drawer" className="md:hidden p-2 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 cursor-pointer">
 					<span className="block w-6 h-0.5 bg-black dark:bg-white mb-1"></span>
 					<span className="block w-6 h-0.5 bg-black dark:bg-white mb-1"></span>
@@ -14,8 +15,8 @@ export default function Header() {
 				</label>
 
 				<Link href="/" className="flex items-center gap-3 min-w-0">
-					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={120} priority />
-					<div className="flex flex-col leading-tight">
+					<Image src="/aktif_logo.png" alt="AKSARAY AKTİF HABER Logo" width={120} height={120} priority className="h-12 w-auto md:h-[120px]" />
+					<div className="hidden md:flex flex-col leading-tight">
 						<span className="text-lg font-semibold tracking-tight uppercase whitespace-nowrap">AKSARAY AKTİF HABER</span>
 						<span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap">Tarafsızlığın Adresi, Aksaray&apos;ın Sesi</span>
 					</div>
