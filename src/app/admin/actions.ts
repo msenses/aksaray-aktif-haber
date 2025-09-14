@@ -143,9 +143,10 @@ export async function upsertAdSlotAction(formData: FormData): Promise<void> {
 			.eq("id", id);
 		if (error) throw new Error(error.message);
 	} else {
+		// Aynı key ile kayıt varsa güncelle, yoksa ekle
 		const { error } = await supabase
 			.from("ad_slots")
-			.insert({ key, title, html, image_url, link_url, is_active });
+			.upsert({ key, title, html, image_url, link_url, is_active }, { onConflict: "key" });
 		if (error) throw new Error(error.message);
 	}
 	revalidatePath("/admin/ads");
