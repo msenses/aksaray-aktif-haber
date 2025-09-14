@@ -14,7 +14,7 @@ type AdSlotRow = {
 	is_active: boolean;
 };
 
-export default async function AdminAdsPage({ searchParams }: { searchParams?: Promise<{ edit?: string }> }) {
+export default async function AdminAdsPage({ searchParams }: { searchParams?: Promise<{ edit?: string; ok?: string; error?: string }> }) {
 	const supabase = await createSupabaseServerClient();
 	const sp = (await searchParams) || {};
 	const editId = sp.edit || "";
@@ -36,6 +36,12 @@ export default async function AdminAdsPage({ searchParams }: { searchParams?: Pr
 	return (
 		<div className="space-y-6">
 			<h1 className="text-xl font-semibold">Reklam Yönetimi</h1>
+			{sp.ok && (
+				<div className="rounded border border-green-600 text-green-700 dark:text-green-400 px-3 py-2 bg-green-50 dark:bg-green-900/20">Kaydedildi.</div>
+			)}
+			{sp.error && (
+				<div className="rounded border border-red-600 text-red-700 dark:text-red-400 px-3 py-2 bg-red-50 dark:bg-red-900/20">Hata: {sp.error}</div>
+			)}
 			<section className="rounded-2xl border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 				<h2 className="text-base font-medium mb-3">Yeni / Düzenle</h2>
 				<form action={upsertAdSlotAction} method="post" encType="multipart/form-data" className="grid gap-3 grid-cols-1 md:grid-cols-2">
