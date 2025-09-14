@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import type { PublishedNews } from "@/lib/news";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -44,7 +45,7 @@ export default function LatestNewsSlider({ items }: { items: PublishedNews[] }) 
 				<ul className="flex gap-4 snap-x snap-mandatory pr-2">
 					{slides.map((n) => (
 						<li key={n.id} className="min-w-[260px] max-w-[280px] snap-start">
-							<a href={`/haber/${encodeURIComponent(n.slug)}`} className="block rounded-lg overflow-hidden border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5">
+							<Link href={`/haber/${n.slug}`} className="block rounded-lg overflow-hidden border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5">
 								<div className="relative h-40 w-full">
 									<Image src={n.cover_image_url || "/window.svg"} alt={n.title} fill className="object-cover" sizes="(max-width: 768px) 60vw, 33vw" />
 								</div>
@@ -52,7 +53,7 @@ export default function LatestNewsSlider({ items }: { items: PublishedNews[] }) 
 									<h3 className="text-sm font-semibold line-clamp-2">{n.title}</h3>
 									<p className="text-xs text-black/60 dark:text-white/60 line-clamp-2">{n.summary || ""}</p>
 								</div>
-							</a>
+							</Link>
 						</li>
 					))}
 				</ul>
