@@ -19,13 +19,16 @@ export default async function AdminAdsPage() {
 				<form action={upsertAdSlotAction} className="grid gap-3 grid-cols-1 md:grid-cols-2">
 					<input type="hidden" name="id" />
 					<label className="text-sm">Reklam Alanı
-						<input name="key" required className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="küçük harf ve alt çizgi ile yazınız" />
+						<select name="key" required defaultValue="ana_reklam_alani" className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2">
+							<option value="ana_reklam_alani">ana_reklam_alani</option>
+							<option value="toplu_reklamlar">toplu_reklamlar</option>
+						</select>
 					</label>
-					<label className="text-sm">Reklam Başlığı
-						<input name="title" required className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="İlgili Reklam İçin Bir Başlık Yazınız" />
+					<label className="text-sm">Başlık
+						<input name="title" required className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="Başlık" />
 					</label>
 					<label className="text-sm md:col-span-2">HTML (opsiyonel)
-						<textarea name="html" rows={4} className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="Aynı anda hem HTML hem Görsel kullanmayın. Öncelik HTML tarafındadır; görsel tabanlı reklam istiyorsanız HTML’yi boş bırakın."></textarea>
+						<textarea name="html" rows={4} className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="<iframe ...></iframe>"></textarea>
 					</label>
 					<label className="text-sm">Görsel URL (opsiyonel)
 						<input name="image_url" className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="https://...png" />
