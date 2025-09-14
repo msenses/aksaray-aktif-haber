@@ -44,7 +44,7 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 									id={n.id}
 									title={n.title}
 									excerpt={n.summary || ""}
-									date={n.published_at || new Date().toISOString()}
+									date={n.published_at || "1970-01-01T00:00:00.000Z"}
 									slug={n.slug}
 									imageSrc={n.cover_image_url || undefined}
 									viewCount={typeof n.views === "number" ? n.views : 0}

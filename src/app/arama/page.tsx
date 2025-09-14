@@ -28,7 +28,7 @@ export default async function SearchPage({ searchParams }: { searchParams?: { q?
 			{q && items.length > 0 && (
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 					{items.map((n) => (
-						<NewsCard key={n.id} id={n.id} title={n.title} excerpt={n.summary || ""} date={n.published_at || new Date().toISOString()} slug={n.slug} imageSrc={n.cover_image_url || undefined} viewCount={0} />
+						<NewsCard key={n.id} id={n.id} title={n.title} excerpt={n.summary || ""} date={n.published_at || "1970-01-01T00:00:00.000Z"} slug={n.slug} imageSrc={n.cover_image_url || undefined} viewCount={0} />
 					))}
 				</div>
 			)}

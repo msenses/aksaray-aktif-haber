@@ -11,8 +11,16 @@ export type NewsCardProps = {
 	slug?: string;
 };
 
+function formatIsoDateTime(input: string): { dateTimeAttr: string; text: string } {
+	const d = new Date(input);
+	const iso = d.toISOString();
+	// YYYY-MM-DD HH:mm (UTC tabanlı, deterministik)
+	return { dateTimeAttr: iso, text: `${iso.slice(0, 10)} ${iso.slice(11, 16)}` };
+}
+
 export default function NewsCard({ id, title, excerpt, date, viewCount, imageSrc, slug }: NewsCardProps) {
 	const href = slug ? `/haber/${slug}` : id ? `/haber/${id}` : undefined;
+	const formatted = formatIsoDateTime(date);
 	if (href) {
 		return (
 			<a href={href} className="group block rounded-2xl overflow-hidden border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur transition-shadow hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer">
@@ -28,7 +36,7 @@ export default function NewsCard({ id, title, excerpt, date, viewCount, imageSrc
 					</div>
 					<div className="p-4 space-y-2">
 						<div className="flex items-center gap-3 text-xs text-black/60 dark:text-white/60">
-							<time dateTime={date}>{new Date(date).toLocaleDateString("tr-TR")} {new Date(date).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</time>
+							<time suppressHydrationWarning dateTime={formatted.dateTimeAttr}>{formatted.text}</time>
 							<span>•</span>
 							<span>{typeof viewCount === "number" ? viewCount : 0} görüntülenme</span>
 						</div>
@@ -52,7 +60,7 @@ export default function NewsCard({ id, title, excerpt, date, viewCount, imageSrc
 			</div>
 			<div className="p-4 space-y-2">
 				<div className="flex items-center gap-3 text-xs text-black/60 dark:text-white/60">
-					<time dateTime={date}>{new Date(date).toLocaleDateString("tr-TR")} {new Date(date).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</time>
+					<time suppressHydrationWarning dateTime={formatted.dateTimeAttr}>{formatted.text}</time>
 					<span>•</span>
 					<span>{typeof viewCount === "number" ? viewCount : 0} görüntülenme</span>
 				</div>
