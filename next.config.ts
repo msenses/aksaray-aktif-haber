@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/favicon.ico",
+        destination: "/aktif_logo_amblem.png",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

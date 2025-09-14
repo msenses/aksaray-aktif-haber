@@ -29,6 +29,11 @@ export const metadata: Metadata = {
 	title: "AKSARAY AKTİF HABER",
 	description: "Aksaray'dan en güncel, doğru ve tarafsız haberler",
 	metadataBase: resolveSiteUrl(),
+	icons: {
+		icon: [{ url: "/aktif_logo_amblem.png" }],
+		apple: [{ url: "/aktif_logo_amblem.png" }],
+		shortcut: [{ url: "/aktif_logo_amblem.png" }],
+	},
 };
 
 export default async function RootLayout({
