@@ -108,3 +108,36 @@ export async function deleteNewsAction(formData: FormData): Promise<void> {
 	if (error) throw new Error(error.message);
 	revalidatePath("/admin");
 }
+
+export async function upsertAdSlotAction(formData: FormData): Promise<void> {
+	const supabase = await createSupabaseServerClient();
+	const id = String(formData.get("id") || "");
+	const key = String(formData.get("key") || "").trim();
+	const title = String(formData.get("title") || "").trim();
+	const html = String(formData.get("html") || "");
+	const image_url = String(formData.get("image_url") || "");
+	const link_url = String(formData.get("link_url") || "");
+	const is_active = String(formData.get("is_active") || "true") === "true";
+	if (!key || !title) throw new Error("key ve title zorunlu");
+	if (id) {
+		const { error } = await supabase
+			.from("ad_slots")
+			.update({ key, title, html, image_url, link_url, is_active })
+			.eq("id", id);
+		if (error) throw new Error(error.message);
+	} else {
+		const { error } = await supabase
+			.from("ad_slots")
+			.insert({ key, title, html, image_url, link_url, is_active });
+		if (error) throw new Error(error.message);
+	}
+	revalidatePath("/admin/ads");
+}
+
+export async function deleteAdSlotAction(formData: FormData): Promise<void> {
+	const supabase = await createSupabaseServerClient();
+	const id = String(formData.get("id") || "");
+	const { error } = await supabase.from("ad_slots").delete().eq("id", id);
+	if (error) throw new Error(error.message);
+	revalidatePath("/admin/ads");
+}

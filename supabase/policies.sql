@@ -4,6 +4,7 @@ alter table public.categories enable row level security;
 alter table public.authors enable row level security;
 alter table public.media enable row level security;
 alter table public.comments enable row level security;
+alter table public.ad_slots enable row level security;
 
 -- Public read for published news
 drop policy if exists "Public can read published news" on public.news;
@@ -76,6 +77,14 @@ for update to authenticated using (true) with check (true);
 drop policy if exists "Authenticated can delete comments" on public.comments;
 create policy "Authenticated can delete comments" on public.comments
 for delete to authenticated using (true);
+-- Ad slots policies
+drop policy if exists "Public can read ad slots" on public.ad_slots;
+create policy "Public can read ad slots" on public.ad_slots
+for select using (is_active = true);
+
+drop policy if exists "Authenticated can manage ad slots" on public.ad_slots;
+create policy "Authenticated can manage ad slots" on public.ad_slots
+for all to authenticated using (true) with check (true);
 
 -- Authors insert for authenticated
 drop policy if exists "Authenticated can insert authors" on public.authors;

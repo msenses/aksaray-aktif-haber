@@ -97,3 +97,29 @@ create index if not exists idx_news_published_at on public.news (published_at de
 create index if not exists idx_news_status on public.news (status);
 create index if not exists idx_news_category on public.news (category_id);
 create index if not exists idx_comments_news on public.comments (news_id, created_at);
+
+-- Ad slots (site içi reklam alanları)
+create table if not exists public.ad_slots (
+    id uuid primary key default gen_random_uuid(),
+    key text not null unique, -- ör: header_top, summary_bottom, content_bottom, comments_top
+    title text not null,
+    html text, -- embed/script veya iframe içerikleri
+    image_url text, -- görsel tabanlı reklamlar için
+    link_url text, -- görsele tıklanınca gidilecek adres
+    is_active boolean not null default true,
+    updated_at timestamptz not null default now(),
+    created_at timestamptz not null default now()
+);
+
+create or replace function public.set_ad_slots_updated_at()
+returns trigger as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$ language plpgsql;
+
+drop trigger if exists trg_ad_slots_updated_at on public.ad_slots;
+create trigger trg_ad_slots_updated_at
+before update on public.ad_slots
+for each row execute function public.set_ad_slots_updated_at();

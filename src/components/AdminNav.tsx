@@ -48,6 +48,7 @@ export default function AdminNav() {
 						<NavLink href="/admin/news" label="Haberler" />
 						<NavLink href="/admin/categories" label="Kategoriler" />
 						<NavLink href="/admin/comments" label="Yorumlar" />
+						<NavLink href="/admin/ads" label="Reklamlar" />
 					</nav>
 				</div>
 			</div>
@@ -67,6 +68,7 @@ export default function AdminNav() {
 							<NavLink href="/admin/news" label="Haberler" />
 							<NavLink href="/admin/categories" label="Kategoriler" />
 							<NavLink href="/admin/comments" label="Yorumlar" />
+							<NavLink href="/admin/ads" label="Reklamlar" />
 						</nav>
 					</aside>
 				</div>
