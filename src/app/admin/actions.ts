@@ -111,45 +111,51 @@ export async function deleteNewsAction(formData: FormData): Promise<void> {
 
 export async function upsertAdSlotAction(formData: FormData): Promise<void> {
 	const supabase = await createSupabaseServerClient();
-	const id = String(formData.get("id") || "");
-	const key = String(formData.get("key") || "").trim();
-	const title = String(formData.get("title") || "").trim();
-	const html = String(formData.get("html") || "");
-	let image_url = String(formData.get("image_url") || "");
-	const link_url = String(formData.get("link_url") || "");
-	// Checkbox: işaretliyse form alanı mevcuttur
-	const is_active = formData.has("is_active");
-	if (!key || !title) throw new Error("key ve title zorunlu");
+	try {
+		const id = String(formData.get("id") || "");
+		const key = String(formData.get("key") || "").trim();
+		const title = String(formData.get("title") || "").trim();
+		const html = String(formData.get("html") || "");
+		let image_url = String(formData.get("image_url") || "");
+		const link_url = String(formData.get("link_url") || "");
+		// Checkbox: işaretliyse form alanı mevcuttur
+		const is_active = formData.has("is_active");
+		if (!key || !title) throw new Error("key ve title zorunlu");
 
-	// Opsiyonel: Görsel dosyası yükle ve image_url alanını güncelle
-	const imageFile = formData.get("image_file") as File | null;
-	if (imageFile && typeof imageFile === "object" && imageFile.size > 0) {
-		const ext = extFromMime(imageFile.type);
-		const path = `ads/${key}/banner-${Date.now()}.${ext}`;
-		const { error: upErr } = await supabase.storage
-			.from("news-media")
-			.upload(path, imageFile, {
-				upsert: true,
-				contentType: imageFile.type || undefined,
-			});
-		if (upErr) throw new Error(upErr.message);
-		const { data } = supabase.storage.from("news-media").getPublicUrl(path);
-		image_url = data.publicUrl;
+		// Opsiyonel: Görsel dosyası yükle ve image_url alanını güncelle
+		const imageFile = formData.get("image_file") as File | null;
+		if (imageFile && typeof imageFile === "object" && imageFile.size > 0) {
+			const ext = extFromMime(imageFile.type);
+			const path = `ads/${key}/banner-${Date.now()}.${ext}`;
+			const { error: upErr } = await supabase.storage
+				.from("news-media")
+				.upload(path, imageFile, {
+					upsert: true,
+					contentType: imageFile.type || undefined,
+				});
+			if (upErr) throw new Error(upErr.message);
+			const { data } = supabase.storage.from("news-media").getPublicUrl(path);
+			image_url = data.publicUrl;
+		}
+		if (id) {
+			const { error } = await supabase
+				.from("ad_slots")
+				.update({ key, title, html, image_url, link_url, is_active })
+				.eq("id", id);
+			if (error) throw new Error(error.message);
+		} else {
+			// Aynı key ile kayıt varsa güncelle, yoksa ekle
+			const { error } = await supabase
+				.from("ad_slots")
+				.upsert({ key, title, html, image_url, link_url, is_active }, { onConflict: "key" });
+			if (error) throw new Error(error.message);
+		}
+		revalidatePath("/admin/ads");
+		redirect("/admin/ads?ok=1");
+	} catch (e: unknown) {
+		const msg = (e as { message?: string })?.message || "unknown";
+		redirect(`/admin/ads?error=${encodeURIComponent(msg)}`);
 	}
-	if (id) {
-		const { error } = await supabase
-			.from("ad_slots")
-			.update({ key, title, html, image_url, link_url, is_active })
-			.eq("id", id);
-		if (error) throw new Error(error.message);
-	} else {
-		// Aynı key ile kayıt varsa güncelle, yoksa ekle
-		const { error } = await supabase
-			.from("ad_slots")
-			.upsert({ key, title, html, image_url, link_url, is_active }, { onConflict: "key" });
-		if (error) throw new Error(error.message);
-	}
-	revalidatePath("/admin/ads");
 }
 
 export async function deleteAdSlotAction(formData: FormData): Promise<void> {
