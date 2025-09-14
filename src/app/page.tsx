@@ -1,5 +1,6 @@
 import NewsCard from "@/components/NewsCard";
 import LatestNewsSlider from "@/components/LatestNewsSlider";
+import DutyPharmacies from "@/components/DutyPharmacies";
 import { fetchPublishedNewsPage, fetchLatestPublishedNews } from "@/lib/news";
 import { Fragment } from "react";
 
@@ -28,11 +29,20 @@ export default async function Home({ searchParams }: { searchParams?: Promise<{ 
 				</div>
 			</section>
 
-			{/* Son Haberler slider */}
+			{/* Son Haberler + Nöbetçi Eczaneler yan yana (lg+) */}
 			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2">
-				<h2 className="text-lg font-semibold mb-3">Son Haberler</h2>
-				<LatestNewsSlider items={latest} />
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+					<div className="lg:col-span-2">
+						<h2 className="text-lg font-semibold mb-3">Son Haberler</h2>
+						<LatestNewsSlider items={latest} />
+					</div>
+					<div className="hidden lg:block lg:col-span-1">
+						<DutyPharmacies variant="sidebar" />
+					</div>
+				</div>
 			</section>
+
+			{/* Mobil/tablet: Nöbetçi eczaneler en altta footer'dan önce görünecek, o yüzden burada değil */}
 
 			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 				{items.length === 0 ? (
@@ -79,6 +89,11 @@ export default async function Home({ searchParams }: { searchParams?: Promise<{ 
 						</a>
 					</div>
 				)}
+			</section>
+
+			{/* Mobil/tablet: duty pharmacies en altta footer öncesi */}
+			<section className="block lg:hidden mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+				<DutyPharmacies />
 			</section>
 		</div>
 	);
