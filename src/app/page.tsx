@@ -3,6 +3,7 @@ import LatestNewsSlider from "@/components/LatestNewsSlider";
 import DutyPharmacies from "@/components/DutyPharmacies";
 import { fetchPublishedNewsPage, fetchLatestPublishedNews } from "@/lib/news";
 import { Fragment } from "react";
+import AdSlot from "@/components/AdSlot";
 
 export default async function Home({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
 	const sp = (await searchParams) || {};
@@ -24,9 +25,7 @@ export default async function Home({ searchParams }: { searchParams?: Promise<{ 
 		<div className="font-sans">
 			{/* Reklam alanı (header altı geniş banner) */}
 			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
-				<div className="relative w-full h-24 sm:h-28 md:h-32 lg:h-36 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center text-sm text-black/60 dark:text-white/60">
-					Reklam Alanı
-				</div>
+				<AdSlot slotKey="ana_reklam_alani" className="relative w-full h-24 sm:h-28 md:h-32 lg:h-36 rounded overflow-hidden" />
 			</section>
 
 			{/* Son Haberler + Nöbetçi Eczaneler yan yana (lg+) */}
@@ -61,9 +60,7 @@ export default async function Home({ searchParams }: { searchParams?: Promise<{ 
 									viewCount={typeof n.views === "number" ? n.views : 0}
 								/>
 								{(idx + 1) % 3 === 0 && (
-									<div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center min-h-48 h-48 text-sm text-black/60 dark:text-white/60">
-										Reklam Alanı
-									</div>
+									<AdSlot slotKey="toplu_reklamlar" className="rounded-2xl overflow-hidden min-h-48 h-48" />
 								)}
 							</Fragment>
 						))}

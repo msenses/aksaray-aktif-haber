@@ -5,6 +5,7 @@ import Image from "next/image";
 import { supabase } from "@/lib/supabaseClient";
 import CommentForm from "@/components/CommentForm";
 import GalleryLightbox from "@/components/GalleryLightbox";
+import AdSlot from "@/components/AdSlot";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -57,18 +58,14 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
 
 	return (
 		<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
-			{/* Başlık üstü reklam - anasayfadaki üst bant ile aynı stil */}
-			<div className="relative w-full h-24 sm:h-28 md:h-32 lg:h-36 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center text-sm text-black/60 dark:text-white/60 mb-6">
-				Reklam Alanı
-			</div>
+			{/* Başlık üstü reklam */}
+			<AdSlot slotKey="ana_reklam_alani" className="relative w-full h-24 sm:h-28 md:h-32 lg:h-36 rounded overflow-hidden mb-6" />
 
 			<h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">{data.title}</h1>
 			<p className="text-black/70 dark:text-white/70 mb-6">{data.summary}</p>
 
 			{/* Özet altı reklam */}
-			<div className="relative w-full h-24 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center text-sm text-black/60 dark:text-white/60 mb-6">
-				Reklam Alanı
-			</div>
+			<AdSlot slotKey="toplu_reklamlar" className="relative w-full h-24 rounded overflow-hidden mb-6" />
 
 			{data.cover_image_url && (
 				<div className="relative w-full h-72 mb-6">
@@ -80,9 +77,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
 			</article>
 
 			{/* İçerik altı reklam */}
-			<div className="relative w-full h-24 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center text-sm text-black/60 dark:text-white/60 mt-6">
-				Reklam Alanı
-			</div>
+			<AdSlot slotKey="toplu_reklamlar" className="relative w-full h-24 rounded overflow-hidden mt-6" />
 
 			{mediaItems.length > 0 && (
 				<div className="mt-8">
@@ -91,9 +86,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
 			)}
 
 			{/* Yorumlar üstü reklam */}
-			<div className="relative w-full h-24 rounded border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center text-sm text-black/60 dark:text-white/60 mt-10 mb-6">
-				Reklam Alanı
-			</div>
+			<AdSlot slotKey="toplu_reklamlar" className="relative w-full h-24 rounded overflow-hidden mt-10 mb-6" />
 
 			<section className="mt-10 space-y-4">
 				<h2 className="text-lg font-semibold">Yorumlar</h2>
