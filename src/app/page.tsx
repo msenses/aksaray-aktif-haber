@@ -5,6 +5,9 @@ import { fetchPublishedNewsPage, fetchLatestPublishedNews } from "@/lib/news";
 import { Fragment } from "react";
 import AdSlot from "@/components/AdSlot";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function Home({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
 	const sp = (await searchParams) || {};
 	const page = Number(sp.page || "1");
