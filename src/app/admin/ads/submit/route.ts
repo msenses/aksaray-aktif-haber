@@ -45,13 +45,13 @@ export async function POST(req: Request) {
         const url = new URL(req.url);
         url.pathname = "/admin/ads";
         url.search = "?ok=1";
-        return NextResponse.redirect(url);
+        return NextResponse.redirect(url, 303);
     } catch (e: unknown) {
         const msg = (e as { message?: string })?.message || "unknown";
         const url = new URL(req.url);
         url.pathname = "/admin/ads";
         url.search = `?error=${encodeURIComponent(msg)}`;
-        return NextResponse.redirect(url);
+        return NextResponse.redirect(url, 303);
     }
 }
 
