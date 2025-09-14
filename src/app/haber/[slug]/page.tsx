@@ -2,8 +2,11 @@ import { fetchNewsBySlug } from "@/lib/news";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { createSupabaseServerClient } from "@/lib/supabaseServer";
+import { supabase } from "@/lib/supabaseClient";
 import CommentForm from "@/components/CommentForm";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type MediaItem = { id: string; url: string; media_type: string | null };
 
@@ -34,7 +37,6 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
 	const { slug } = await params;
 	const data = await fetchNewsBySlug(slug);
 	if (!data) return notFound();
-	const supabase = await createSupabaseServerClient();
 	try {
 		await supabase.rpc("increment_news_views", { p_news_id: data.id });
 	} catch {}
