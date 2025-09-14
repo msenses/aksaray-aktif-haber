@@ -18,17 +18,21 @@ export default async function AdminAdsPage() {
 				<h2 className="text-base font-medium mb-3">Yeni / Düzenle</h2>
 				<form action={upsertAdSlotAction} className="grid gap-3 grid-cols-1 md:grid-cols-2">
 					<input type="hidden" name="id" />
-					<label className="text-sm">Key
-						<input name="key" required className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="header_top" />
+					<label className="text-sm">Reklam Alanı
+						<input name="key" required className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="küçük harf ve alt çizgi ile yazınız" />
 					</label>
-					<label className="text-sm">Başlık
-						<input name="title" required className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="Başlık" />
+					<label className="text-sm">Reklam Başlığı
+						<input name="title" required className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="İlgili Reklam İçin Bir Başlık Yazınız" />
 					</label>
 					<label className="text-sm md:col-span-2">HTML (opsiyonel)
-						<textarea name="html" rows={4} className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="<iframe ...></iframe>"></textarea>
+						<textarea name="html" rows={4} className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="Aynı anda hem HTML hem Görsel kullanmayın. Öncelik HTML tarafındadır; görsel tabanlı reklam istiyorsanız HTML’yi boş bırakın."></textarea>
 					</label>
 					<label className="text-sm">Görsel URL (opsiyonel)
 						<input name="image_url" className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="https://...png" />
+					</label>
+					<label className="text-sm">Görsel Dosyası (opsiyonel)
+						<input name="image_file" type="file" accept="image/*" className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" />
+						<span className="mt-1 block text-xs text-black/60 dark:text-white/60">Yüklerseniz URL otomatik doldurulur.</span>
 					</label>
 					<label className="text-sm">Link URL (opsiyonel)
 						<input name="link_url" className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2" placeholder="https://..." />
