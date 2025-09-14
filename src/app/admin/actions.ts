@@ -137,19 +137,16 @@ export async function upsertAdSlotAction(formData: FormData): Promise<void> {
 			const { data } = supabase.storage.from("news-media").getPublicUrl(path);
 			image_url = data.publicUrl;
 		}
-		if (id) {
-			const { error } = await supabase
-				.from("ad_slots")
-				.update({ key, title, html, image_url, link_url, is_active })
-				.eq("id", id);
-			if (error) throw new Error(error.message);
-		} else {
-			// Aynı key ile kayıt varsa güncelle, yoksa ekle
-			const { error } = await supabase
-				.from("ad_slots")
-				.upsert({ key, title, html, image_url, link_url, is_active }, { onConflict: "key" });
-			if (error) throw new Error(error.message);
-		}
+
+		// Her zaman key'e göre upsert: var ise güncelle, yoksa ekle
+		const { error } = await supabase
+			.from("ad_slots")
+			.upsert(
+				{ key, title, html, image_url, link_url, is_active },
+				{ onConflict: "key" }
+			);
+		if (error) throw new Error(error.message);
+
 		revalidatePath("/admin/ads");
 		redirect("/admin/ads?ok=1");
 	} catch (e: unknown) {
