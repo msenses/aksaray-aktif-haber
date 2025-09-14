@@ -35,12 +35,13 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 
 			<section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
 				{items.length === 0 ? (
-					<p className="text-sm text-black/70 dark:text-white/70 py-10">Şu anda yayınlanmış haber bulunamadı.</p>
+					<p className="text-sm text_black/70 dark:text-white/70 py-10">Şu anda yayınlanmış haber bulunamadı.</p>
 				) : (
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 						{items.map((n, idx) => (
 							<Fragment key={n.id}>
 								<NewsCard
+									id={n.id}
 									title={n.title}
 									excerpt={n.summary || ""}
 									date={n.published_at || new Date().toISOString()}
@@ -49,7 +50,7 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 									viewCount={typeof n.views === "number" ? n.views : 0}
 								/>
 								{(idx + 1) % 3 === 0 && (
-									<div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items-center justify-center min-h-48 h-48 text-sm text-black/60 dark:text-white/60">
+									<div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 flex items_center justify_center min_h-48 h-48 text_sm text_black/60 dark:text_white/60">
 										Reklam Alanı
 									</div>
 								)}
@@ -69,7 +70,7 @@ export default async function Home({ searchParams }: { searchParams?: { page?: s
 						</a>
 						<span className="text-sm text-black/70 dark:text-white/70">Sayfa {page} / {totalPages}</span>
 						<a
-							className="px-3 py-1 rounded border border-black/10 dark:border-white/10 disabled:opacity-50"
+							className="px-3 py-1 rounded border border_black/10 dark:border_white/10 disabled:opacity-50"
 							href={`/?page=${Math.min(totalPages, page + 1)}`}
 							aria-disabled={page >= totalPages}
 						>

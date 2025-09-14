@@ -48,19 +48,36 @@ export type FullNews = {
 	views?: number | null;
 };
 
-export async function fetchNewsBySlug(slug: string) {
-	const { data, error } = await supabase
+export async function fetchNewsBySlug(slugOrId: string) {
+	// Önce slug ile dene
+	const { data: dataBySlug, error: errorBySlug } = await supabase
 		.from("news")
 		.select("id,slug,title,summary,content,cover_image_url,published_at,created_at,views")
-		.eq("slug", slug)
+		.eq("slug", slugOrId)
 		.limit(1)
 		.single();
 
-	if (error) {
-		if (error.code === "PGRST116") return null; // not found
-		throw new Error(error.message);
+	if (errorBySlug && errorBySlug.code !== "PGRST116") {
+		throw new Error(errorBySlug.message);
 	}
-	return data as FullNews;
+
+	let result: FullNews | null = (dataBySlug as FullNews) || null;
+
+	// Bulunamadıysa id ile dene
+	if (!result) {
+		const byId = await supabase
+			.from("news")
+			.select("id,slug,title,summary,content,cover_image_url,published_at,created_at,views")
+			.eq("id", slugOrId)
+			.limit(1)
+			.single();
+		if (byId.error) {
+			if (byId.error.code === "PGRST116") return null;
+			throw new Error(byId.error.message);
+		}
+		result = byId.data as FullNews;
+	}
+	return result as FullNews;
 }
 
 export async function fetchPublishedNewsByCategorySlug(slug: string, page: number, pageSize: number) {
