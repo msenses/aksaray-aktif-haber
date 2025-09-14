@@ -1,5 +1,5 @@
 import { createSupabaseServerClient } from "@/lib/supabaseServer";
-import { upsertAdSlotAction, deleteAdSlotAction } from "../actions";
+import { deleteAdSlotAction } from "../actions";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -44,7 +44,7 @@ export default async function AdminAdsPage({ searchParams }: { searchParams?: { 
 			)}
 			<section className="rounded-2xl border border-black/10 dark:border-white/10 p-4 bg-white/70 dark:bg-white/5">
 				<h2 className="text-base font-medium mb-3">Yeni / Düzenle</h2>
-				<form action={upsertAdSlotAction} method="post" encType="multipart/form-data" className="grid gap-3 grid-cols-1 md:grid-cols-2">
+				<form action="/admin/ads/submit" method="post" encType="multipart/form-data" className="grid gap-3 grid-cols-1 md:grid-cols-2">
 					<input type="hidden" name="id" defaultValue={editing?.id || ""} />
 					<label className="text-sm">Reklam Alanı
 						<select name="key" required defaultValue={editing?.key || "ana_reklam_alani"} className="mt-1 w-full rounded border border-black/10 bg-transparent px-3 py-2">
