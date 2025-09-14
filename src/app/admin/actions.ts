@@ -117,7 +117,8 @@ export async function upsertAdSlotAction(formData: FormData): Promise<void> {
 	const html = String(formData.get("html") || "");
 	let image_url = String(formData.get("image_url") || "");
 	const link_url = String(formData.get("link_url") || "");
-	const is_active = String(formData.get("is_active") || "true") === "true";
+	// Checkbox: işaretliyse form alanı mevcuttur
+	const is_active = formData.has("is_active");
 	if (!key || !title) throw new Error("key ve title zorunlu");
 
 	// Opsiyonel: Görsel dosyası yükle ve image_url alanını güncelle
