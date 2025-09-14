@@ -3,17 +3,20 @@ import { fetchPublishedNewsByCategorySlug } from "@/lib/news";
 import NewsCard from "@/components/NewsCard";
 import { notFound } from "next/navigation";
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-	const category = await fetchCategoryBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+	const { slug } = await params;
+	const category = await fetchCategoryBySlug(slug);
 	if (!category) return { title: "Kategori bulunamadı" };
 	return { title: `${category.name} | AKSARAY AKTİF HABER`, description: category.description || undefined };
 }
 
-export default async function CategoryPage({ params, searchParams }: { params: { slug: string }; searchParams?: { page?: string } }) {
-	const category = await fetchCategoryBySlug(params.slug);
+export default async function CategoryPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams?: Promise<{ page?: string }> }) {
+	const { slug } = await params;
+	const sp = (await searchParams) || {};
+	const category = await fetchCategoryBySlug(slug);
 	if (!category) return notFound();
-	const page = Number(searchParams?.page || "1");
-	const { items, total } = await fetchPublishedNewsByCategorySlug(params.slug, page, 9);
+	const page = Number(sp.page || "1");
+	const { items, total } = await fetchPublishedNewsByCategorySlug(slug, page, 9);
 	const totalPages = Math.max(1, Math.ceil(total / 9));
 
 	return (

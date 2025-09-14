@@ -3,8 +3,9 @@ import LatestNewsSlider from "@/components/LatestNewsSlider";
 import { fetchPublishedNewsPage, fetchLatestPublishedNews } from "@/lib/news";
 import { Fragment } from "react";
 
-export default async function Home({ searchParams }: { searchParams?: { page?: string } }) {
-	const page = Number(searchParams?.page || "1");
+export default async function Home({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
+	const sp = (await searchParams) || {};
+	const page = Number(sp.page || "1");
 	let total = 0;
 	let items: Awaited<ReturnType<typeof fetchPublishedNewsPage>>["items"] = [];
   const latest = await fetchLatestPublishedNews(12);

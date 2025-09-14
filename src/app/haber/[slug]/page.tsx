@@ -9,8 +9,9 @@ type MediaItem = { id: string; url: string; media_type: string | null };
 
 type CommentItem = { id: string; author_name: string | null; content: string; created_at: string };
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-	const data = await fetchNewsBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+	const { slug } = await params;
+	const data = await fetchNewsBySlug(slug);
 	if (!data) return { title: "Haber bulunamadı" };
 	return {
 		title: `${data.title} | AKSARAY AKTİF HABER`,
@@ -29,8 +30,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 	};
 }
 
-export default async function NewsDetail({ params }: { params: { slug: string } }) {
-	const data = await fetchNewsBySlug(params.slug);
+export default async function NewsDetail({ params }: { params: Promise<{ slug: string }> }) {
+	const { slug } = await params;
+	const data = await fetchNewsBySlug(slug);
 	if (!data) return notFound();
 	const supabase = await createSupabaseServerClient();
 	try {

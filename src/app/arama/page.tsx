@@ -3,9 +3,10 @@ import { searchPublishedNews } from "@/lib/news";
 
 export const metadata = { title: "Arama | AKSARAY AKTİF HABER" };
 
-export default async function SearchPage({ searchParams }: { searchParams?: { q?: string; page?: string } }) {
-	const q = (searchParams?.q || "").trim();
-	const page = Number(searchParams?.page || "1");
+export default async function SearchPage({ searchParams }: { searchParams?: Promise<{ q?: string; page?: string }> }) {
+	const sp = (await searchParams) || {};
+	const q = (sp.q || "").trim();
+	const page = Number(sp.page || "1");
 	let items: Awaited<ReturnType<typeof searchPublishedNews>>["items"] = [];
 	let total = 0;
 	if (q) {
