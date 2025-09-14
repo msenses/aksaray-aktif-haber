@@ -8,12 +8,15 @@ import AdSlot from "@/components/AdSlot";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function Home({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
-	const sp = (await searchParams) || {};
+export default async function Home({ searchParams }: { searchParams?: { page?: string } }) {
+	const sp = searchParams || {};
 	const page = Number(sp.page || "1");
 	let total = 0;
 	let items: Awaited<ReturnType<typeof fetchPublishedNewsPage>>["items"] = [];
-  const latest = await fetchLatestPublishedNews(12);
+	let latest: Awaited<ReturnType<typeof fetchLatestPublishedNews>> = [];
+	try {
+		latest = await fetchLatestPublishedNews(12);
+	} catch {}
 	try {
 		const res = await fetchPublishedNewsPage(page, 9);
 		total = res.total;

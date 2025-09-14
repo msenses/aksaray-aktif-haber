@@ -3,8 +3,8 @@ import { searchPublishedNews } from "@/lib/news";
 
 export const metadata = { title: "Arama | AKSARAY AKTİF HABER" };
 
-export default async function SearchPage({ searchParams }: { searchParams?: Promise<{ q?: string; page?: string }> }) {
-	const sp = (await searchParams) || {};
+export default async function SearchPage({ searchParams }: { searchParams?: { q?: string; page?: string } }) {
+	const sp = searchParams || {};
 	const q = (sp.q || "").trim();
 	const page = Number(sp.page || "1");
 	let items: Awaited<ReturnType<typeof searchPublishedNews>>["items"] = [];

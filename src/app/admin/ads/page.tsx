@@ -14,9 +14,9 @@ type AdSlotRow = {
 	is_active: boolean;
 };
 
-export default async function AdminAdsPage({ searchParams }: { searchParams?: Promise<{ edit?: string; ok?: string; error?: string }> }) {
+export default async function AdminAdsPage({ searchParams }: { searchParams?: { edit?: string; ok?: string; error?: string } }) {
 	const supabase = await createSupabaseServerClient();
-	const sp = (await searchParams) || {};
+	const sp = searchParams || {};
 	const editId = sp.edit || "";
 	const { data: slots } = await supabase
 		.from("ad_slots")
